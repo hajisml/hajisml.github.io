@@ -1,1 +1,8 @@
- 
+@font-face {
+    font-family: myFirstFont;
+    src: url(mvg.ttf);
+}
+  
+h1 {
+    font-family: martiandegree;
+}
