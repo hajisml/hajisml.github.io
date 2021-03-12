@@ -1,8 +1,8 @@
 @font-face {
-    font-family: myFirstFont;
-    src: url(https://halimke.github.io/static/fonts/mvg.ttf);
+    font-family: "martiandegree";
+    src: url(./static/fonts/mvg.ttf);
 }
   
 h1 {
-    font-family: martiandegree;
+    font-family: 'martiandegree';
 }
