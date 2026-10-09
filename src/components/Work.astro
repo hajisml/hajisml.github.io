@@ -1,0 +1,27 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import { projectsFor, type Persona, type Project } from '../lib/site';
+const { personas, projects } = Astro.props as { personas: Persona[]; projects: Project[] };
+---
+<section id="work" aria-labelledby="work-h">
+  {personas.map(per => {
+    const list = projectsFor(projects, per.id);
+    const cats = ['All', ...new Set(list.map(p => p.category))];
+    return (
+      <div data-p={per.id} data-work>
+        <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:36px">
+          <h2 id={per.id === personas[0].id ? 'work-h' : undefined} class="mvg" style="margin:0; font-weight:400; line-height:0.92; display:flex; flex-direction:column">
+            <span style="font-size:clamp(22px,3vw,36px); color:rgb(var(--ink) / 0.5)">selected</span>
+            <span style="font-size:clamp(56px,9vw,120px)">WORK</span>
+          </h2>
+          <div role="group" aria-label="Filter projects" style="display:flex; flex-wrap:wrap; gap:8px">
+            {cats.map(c => <button class="filter" data-filter={c} aria-pressed={c === 'All' ? 'true' : 'false'}>{c}</button>)}
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap:20px">
+          {list.map(p => <ProjectCard p={p} />)}
+        </div>
+      </div>
+    );
+  })}
+</section>

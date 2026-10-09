@@ -1,0 +1,56 @@
+---
+import Base from '../../layouts/Base.astro';
+import BlogSearch from '../../components/BlogSearch.astro';
+import { asset, BLOG_COPY, fmtDate, getPosts, getSite, readMins } from '../../lib/site';
+
+const site = await getSite();
+const posts = await getPosts();
+---
+<Base title="Blog — Haji Ibrahim" description="Notes on backend engineering, Bitcoin & Lightning, distributed systems, hackathons and design by Haji Ibrahim." variant="blog">
+  <BlogSearch slot="overlays" posts={posts} />
+  <main id="main" style="position:relative; z-index:3; max-width:1080px; margin:0 auto; padding:clamp(120px,14vw,160px) clamp(16px,4vw,40px) 64px; box-sizing:border-box">
+    {site.personas.map(p => {
+      const mine = posts.filter(x => x.data.persona === p.id);
+      const copy = BLOG_COPY[p.id];
+      return (
+        <div data-p={p.id}>
+          <header style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:40px">
+            <h1 class="mvg" style="margin:0; font-weight:400; line-height:0.92; display:flex; flex-direction:column">
+              <span style="font-size:clamp(22px,3vw,36px); color:rgb(var(--ink) / 0.6)">{copy.kicker}</span>
+              <span style="font-size:clamp(64px,10vw,132px)">BLOG</span>
+            </h1>
+            <p style="margin:0; max-width:40ch; color:rgb(var(--ink) / 0.78); text-wrap:pretty">{copy.intro}</p>
+          </header>
+          {mine.length === 0 && (
+            <div class="glass" style="padding:clamp(28px,5vw,56px); display:flex; flex-direction:column; align-items:flex-start; gap:12px; max-width:620px; background:rgb(var(--glass) / 0.45)">
+              <span aria-hidden="true" style="width:18px; height:16px; background:var(--gold); clip-path:polygon(50% 0, 100% 100%, 0 100%)"></span>
+              <h2 class="mvg" style="margin:0; font-weight:400; font-size:clamp(28px,3.4vw,40px); line-height:1.05">On the drawing board</h2>
+              <p style="margin:0; color:rgb(var(--ink) / 0.78); text-wrap:pretty">No posts here yet. The first write-up for this side of the work is in progress.</p>
+            </div>
+          )}
+          <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap:20px; max-width:860px">
+            {mine.map(post => (
+              <a href={`/blog/${post.data.slug}/`} class="post-card glass">
+                <div style={`aspect-ratio:1200 / 627; background:rgb(var(--hi) / 0.05) center / cover no-repeat; ${post.data.cover ? `background-image:url("${asset(post.data.cover)}");` : ''} border-bottom:1px solid rgb(var(--hi) / 0.08)`}></div>
+                <div style="padding:22px 24px 26px; display:flex; flex-direction:column; gap:12px">
+                  <div style="display:flex; flex-wrap:wrap; gap:6px 16px; font-size:12px; letter-spacing:0.1em; text-transform:uppercase">
+                    <time datetime={post.data.date} style="white-space:nowrap; color:var(--gold)">{fmtDate(post.data.date)}</time>
+                    <span style="white-space:nowrap; color:rgb(var(--ink) / 0.7)">{readMins(post)} min read</span>
+                  </div>
+                  <h2 style="margin:0; font-size:clamp(22px,2.4vw,28px); font-weight:600; line-height:1.2; text-wrap:balance">{post.data.title}</h2>
+                  <p style="margin:0; font-size:15px; color:rgb(var(--ink) / 0.8); text-wrap:pretty">{post.data.summary}</p>
+                  <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:4px">
+                    {post.data.tags.map(t => <span style="font-size:11px; padding:4px 9px; border-radius:6px; background:rgb(var(--hi) / 0.08); color:rgb(var(--ink) / 0.85)">#{t}</span>)}
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      );
+    })}
+  </main>
+</Base>
+<script>
+  import '../../scripts/blog';
+</script>

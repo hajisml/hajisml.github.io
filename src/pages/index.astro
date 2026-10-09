@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Work from '../components/Work.astro';
+import About from '../components/About.astro';
+import Quote from '../components/Quote.astro';
+import Experience from '../components/Experience.astro';
+import Skills from '../components/Skills.astro';
+import Learning from '../components/Learning.astro';
+import Contact from '../components/Contact.astro';
+import MenuWheel from '../components/MenuWheel.astro';
+import ProjectDetail from '../components/ProjectDetail.astro';
+import { getSite, getProjects, TITLES } from '../lib/site';
+
+const site = await getSite();
+const projects = await getProjects();
+const dev = site.personas.find(p => p.id === 'dev') ?? site.personas[0];
+const jsonLd = {
+  '@context': 'https://schema.org', '@type': 'Person', name: site.name, alternateName: 'Halim', jobTitle: site.role,
+  address: { '@type': 'PostalAddress', addressLocality: 'Kisumu', addressCountry: 'KE' },
+  email: `mailto:${site.email}`, url: Astro.site?.href,
+  sameAs: site.socials.filter(s => /^https?:/.test(s.url)).map(s => s.url),
+  alumniOf: site.education[0]?.school, knowsAbout: dev.skills.flatMap(g => g.items).slice(0, 8),
+};
+---
+<Base title={TITLES.dev} description={`${site.name} (Halim) — ${dev.tagline} ${dev.intro}`} variant="home" jsonLd={jsonLd}>
+  <Fragment slot="overlays">
+    <MenuWheel site={site} />
+    <div class="modal" data-modal hidden>
+      <article role="dialog" aria-modal="true" data-modal-card style="position:relative; width:100%; max-width:860px; background:rgb(var(--glass) / 0.72); backdrop-filter:blur(28px) saturate(140%); -webkit-backdrop-filter:blur(28px) saturate(140%); border:1px solid rgb(var(--hi) / 0.16); border-radius:26px; overflow:hidden; box-shadow:0 40px 120px -40px rgb(var(--sh) / 0.8)">
+        <button class="close-btn" data-modal-close aria-label="Close project">×</button>
+        <div data-modal-body></div>
+      </article>
+    </div>
+    {projects.map(p => (
+      <template data-project-tpl={p.slug} data-title={p.title}><ProjectDetail p={p} /></template>
+    ))}
+  </Fragment>
+
+  <Hero site={site} />
+  <main id="main" data-main style="display:flex; transition:opacity .25s ease, transform .4s var(--ease); position:relative; z-index:3; flex-direction:column; gap:clamp(96px,14vw,180px); padding:clamp(64px,8vw,120px) clamp(16px,4vw,56px) 64px; max-width:1240px; margin:0 auto">
+    <Work personas={site.personas} projects={projects} />
+    <About site={site} />
+    <Quote quote={site.quote} />
+    <Experience site={site} />
+    <Skills personas={site.personas} />
+    <Learning personas={site.personas} />
+    <Contact site={site} />
+  </main>
+</Base>
+
+<script>
+  import '../scripts/home';
+</script>

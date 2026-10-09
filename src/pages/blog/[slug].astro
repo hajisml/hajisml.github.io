@@ -1,0 +1,49 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import BlogSearch from '../../components/BlogSearch.astro';
+import { asset, canonicalHost, fmtDate, getPosts, getSite, readMins, type Post } from '../../lib/site';
+
+export async function getStaticPaths() {
+  return (await getPosts()).map(post => ({ params: { slug: post.data.slug }, props: { post } }));
+}
+const { post } = Astro.props as { post: Post };
+const { Content } = await render(post);
+const posts = await getPosts();
+const site = await getSite();
+const d = post.data;
+const host = d.canonical ? canonicalHost(d.canonical) : '';
+const jsonLd = {
+  '@context': 'https://schema.org', '@type': 'BlogPosting', headline: d.title, description: d.summary,
+  datePublished: d.date, image: d.cover ? new URL(asset(d.cover), Astro.site).href : undefined,
+  author: { '@type': 'Person', name: site.name, url: Astro.site?.href }, keywords: d.tags.join(', '),
+  ...(d.canonical ? { url: d.canonical } : {}),
+};
+---
+<Base title={`${d.title} — Haji Ibrahim`} description={d.summary} variant="blog" type="article" image={d.cover ? asset(d.cover) : undefined} jsonLd={jsonLd}>
+  <BlogSearch slot="overlays" posts={posts} />
+  <main id="main" style="position:relative; z-index:3; max-width:1080px; margin:0 auto; padding:clamp(120px,14vw,160px) clamp(16px,4vw,40px) 64px; box-sizing:border-box">
+    <article style="max-width:780px; margin:0 auto; display:flex; flex-direction:column; gap:22px">
+      <a href="/blog/" style="align-self:flex-start; display:inline-flex; align-items:center; gap:8px; font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:rgb(var(--ink) / 0.75)"><span class="mi" aria-hidden="true" style="--i:url(/assets/icons/lucide/arrow-left.svg); width:14px; height:14px"></span>All posts</a>
+      <div style="display:flex; flex-wrap:wrap; gap:6px 16px; font-size:12px; letter-spacing:0.12em; text-transform:uppercase">
+        <time datetime={d.date} style="white-space:nowrap; color:var(--gold)">{fmtDate(d.date)}</time>
+        <span style="white-space:nowrap; color:rgb(var(--ink) / 0.7)">{readMins(post)} min read</span>
+      </div>
+      <h1 class="mvg" style="margin:0; font-weight:400; font-size:clamp(38px,5.6vw,68px); line-height:1.02; text-wrap:balance">{d.title}</h1>
+      <div style="display:flex; flex-wrap:wrap; gap:6px">
+        {d.tags.map(t => <span style="font-size:12px; padding:4px 10px; border-radius:6px; background:rgb(var(--hi) / 0.08)">#{t}</span>)}
+      </div>
+      {d.cover && <div role="img" aria-label={`${d.title} cover`} style={`aspect-ratio:1200 / 627; border-radius:20px; border:1px solid rgb(var(--hi) / 0.12); background:rgb(var(--hi) / 0.05) center / cover no-repeat; background-image:url("${asset(d.cover)}")`}></div>}
+      <div class="glass prose" style="padding:clamp(22px,4vw,48px); background:rgb(var(--glass) / 0.55)">
+        <Content />
+      </div>
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:14px; font-size:14px; color:rgb(var(--ink) / 0.75)">
+        {host ? <span>Originally published on <a href={d.canonical} target="_blank" rel="noopener" style="border-bottom:1px solid rgb(var(--ink) / 0.4)">{host}</a></span> : <span></span>}
+        <a href="/blog/" style="letter-spacing:0.12em; text-transform:uppercase; font-size:13px">← All posts</a>
+      </div>
+    </article>
+  </main>
+</Base>
+<script>
+  import '../../scripts/blog';
+</script>

@@ -1,0 +1,37 @@
+---
+// Project write-up, used both in the home-page modal and on /projects/<slug>/.
+import { asset, fitOf, liveOf, type Project } from '../lib/site';
+interface Props { p: Project; headingTag?: 'h1' | 'h2'; idPrefix?: string }
+const { p, headingTag: H = 'h2', idPrefix = 'pd' } = Astro.props;
+const { fit, pad } = fitOf(p);
+const live = liveOf(p);
+---
+<div class="cover" style="aspect-ratio:21 / 9; align-items:flex-end; padding:16px 20px">
+  <span style="font-family:inherit; font-size:11px; color:rgb(var(--ink) / 0.68)">{p.cover ? '' : 'cover · ' + p.slug}</span>
+  {p.cover && <div role="img" aria-label={`${p.title} cover`} class="cover-img" style={`background-image:url("${asset(p.cover)}"); background-size:${fit}; padding:${pad}`}></div>}
+</div>
+<div style="padding:clamp(24px,4vw,44px); display:flex; flex-direction:column; gap:20px">
+  <div style="display:flex; gap:16px; font-family:inherit; font-size:12px; letter-spacing:0.08em">
+    <span style="color:var(--gold)">{p.category}</span>
+    <span style="color:rgb(var(--ink) / 0.7)">{p.year}</span>
+  </div>
+  <div>
+    <H id={`${idPrefix}-${p.slug}`} class="mvg" style="margin:0; font-weight:400; font-size:clamp(44px,7vw,80px); line-height:0.95">{p.title}</H>
+    <p style="margin:8px 0 0; font-family:inherit; font-size:14px; color:rgb(var(--ink) / 0.7)">{p.subtitle}</p>
+  </div>
+  <p style="margin:0; font-size:19px; line-height:1.5; text-wrap:pretty">{p.summary}</p>
+  {p.highlights.length > 0 && (
+    <ul style="margin:0; padding:0 0 0 18px; display:flex; flex-direction:column; gap:10px; color:rgb(var(--ink) / 0.84); font-size:16px">
+      {p.highlights.map(h => <li style="text-wrap:pretty">{h}</li>)}
+    </ul>
+  )}
+  <div style="display:flex; flex-wrap:wrap; gap:6px">
+    {p.stack.map(t => <span class="tag-chip">{t}</span>)}
+  </div>
+  {(p.repo || p.live) && (
+    <div style="display:flex; flex-wrap:wrap; gap:12px">
+      {p.repo && <a href={p.repo} target="_blank" rel="noopener" class="btn-solid"><span class="mi" aria-hidden="true" style="--i:url(/assets/icons/si/github.svg); width:17px; height:17px"></span>View source<span class="mi" aria-hidden="true" style="--i:url(/assets/icons/lucide/arrow-up-right.svg); width:13px; height:13px"></span></a>}
+      {p.live && <a href={p.live} target="_blank" rel="noopener" class="btn-outline"><span><span class="mi" aria-hidden="true" style={`--i:url(${live.icon}); width:17px; height:17px`}></span>{live.label}<span class="mi" aria-hidden="true" style="--i:url(/assets/icons/lucide/arrow-up-right.svg); width:13px; height:13px"></span></span></a>}
+    </div>
+  )}
+</div>

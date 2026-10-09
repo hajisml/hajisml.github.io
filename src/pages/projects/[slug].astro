@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectDetail from '../../components/ProjectDetail.astro';
+import { asset, getProjects, type Project } from '../../lib/site';
+
+export async function getStaticPaths() {
+  return (await getProjects()).map(p => ({ params: { slug: p.slug }, props: { p } }));
+}
+const { p } = Astro.props as { p: Project };
+const image = p.cover && !p.cover.endsWith('.svg') ? asset(p.cover) : undefined;
+---
+<Base title={`${p.title} — Haji Ibrahim`} description={`${p.title}: ${p.subtitle}. ${p.summary}`} variant="page" image={image}>
+  <main id="main" style="position:relative; z-index:3; max-width:1080px; margin:0 auto; padding:clamp(120px,14vw,160px) clamp(16px,4vw,40px) 64px; box-sizing:border-box">
+    <div style="max-width:860px; margin:0 auto; display:flex; flex-direction:column; gap:22px">
+      <a href="/#work" style="align-self:flex-start; display:inline-flex; align-items:center; gap:8px; font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:rgb(var(--ink) / 0.75)"><span class="mi" aria-hidden="true" style="--i:url(/assets/icons/lucide/arrow-left.svg); width:14px; height:14px"></span>All work</a>
+      <article aria-labelledby={`pd-${p.slug}`} style="position:relative; background:rgb(var(--glass) / 0.72); backdrop-filter:blur(28px) saturate(140%); -webkit-backdrop-filter:blur(28px) saturate(140%); border:1px solid rgb(var(--hi) / 0.16); border-radius:26px; overflow:hidden; box-shadow:0 40px 120px -40px rgb(var(--sh) / 0.8)">
+        <ProjectDetail p={p} headingTag="h1" />
+      </article>
+    </div>
+  </main>
+</Base>

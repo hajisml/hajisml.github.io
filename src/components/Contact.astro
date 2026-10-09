@@ -1,0 +1,52 @@
+---
+// Contact card. scripts/contact.ts posts the form to /api/contact (Turnstile + Resend);
+// without a Turnstile site key at build time it falls back to opening the visitor's mail app.
+import { emailFor, mine, socialMask, type Site } from '../lib/site';
+const { site } = Astro.props as { site: Site };
+const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
+---
+<section id="contact" aria-labelledby="contact-h" data-reveal style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap:clamp(28px,4vw,56px); padding:clamp(26px,5vw,64px); background:rgb(var(--glass) / 0.5); backdrop-filter:blur(26px) saturate(140%); -webkit-backdrop-filter:blur(26px) saturate(140%); border:1px solid rgb(var(--hi) / 0.14); border-radius:28px">
+  <div style="display:flex; flex-direction:column; gap:20px">
+    <h2 id="contact-h" class="mvg" style="margin:0; font-weight:400; line-height:0.92; display:flex; flex-direction:column">
+      <span style="font-size:clamp(22px,3vw,36px); color:rgb(var(--ink) / 0.5)">say</span>
+      <span style="font-size:clamp(56px,8vw,108px)">HELLO</span>
+    </h2>
+    <p style="margin:0; color:rgb(var(--ink) / 0.82); max-width:42ch; text-wrap:pretty">{site.contact.blurb}</p>
+    {site.personas.map(p => {
+      const email = emailFor(site, p);
+      return (
+        <div data-p={p.id} style="display:flex; flex-wrap:wrap; align-items:center; gap:10px">
+          <a href={`mailto:${email}`} style="display:inline-flex; align-items:center; gap:10px; font-size:clamp(18px,2vw,22px); font-weight:500; border-bottom:1px solid rgb(var(--ink) / 0.4); padding-bottom:2px"><span class="mi" aria-hidden="true" style="--i:url(/assets/icons/lucide/mail.svg); width:20px; height:20px"></span>{email}</a>
+          <button class="copy-btn" data-copy={email} aria-label="Copy email address" title="Copy email address"><span class="mi" aria-hidden="true" data-copy-icon style="--i:url(/assets/icons/lucide/copy.svg); width:17px; height:17px"></span></button>
+        </div>
+      );
+    })}
+    <span role="status" aria-live="polite" class="sr-only" data-copy-status></span>
+    <div style="margin-top:auto">
+      {site.personas.map(p => (
+        <div data-p={p.id} style="display:flex; flex-wrap:wrap; gap:10px 24px; font-family:inherit; font-size:13px">
+          {mine(site.socials, p.id).map(s => (
+            <a href={s.url} target="_blank" rel="noopener me" style="display:inline-flex; align-items:center; gap:8px; color:rgb(var(--ink) / 0.8)"><span class="mi" aria-hidden="true" style={`--i:${socialMask(s)}; width:15px; height:15px`}></span>{s.label}<span class="mi" aria-hidden="true" style="--i:url(/assets/icons/lucide/arrow-up-right.svg); width:13px; height:13px"></span></a>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+  <form data-contact data-turnstile={turnstileKey} aria-busy="false" style="display:flex; flex-direction:column; gap:14px" novalidate>
+    <input name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" class="trap">
+    <label class="field-label">Name
+      <input class="field" name="name" required autocomplete="name" maxlength="120">
+    </label>
+    <label class="field-label">Email
+      <input class="field" name="email" type="email" required autocomplete="email" maxlength="200">
+    </label>
+    <label class="field-label">Message
+      <textarea class="field" name="message" required rows="5" maxlength="5000"></textarea>
+    </label>
+    {turnstileKey && <div class="cf-turnstile" data-sitekey={turnstileKey} data-appearance="interaction-only" data-theme="auto"></div>}
+    <div style="display:flex; flex-wrap:wrap; align-items:center; gap:16px; margin-top:4px">
+      <button type="submit" class="btn-solid" style="padding:14px 28px"><span class="mi" aria-hidden="true" data-submit-icon style="--i:url(/assets/icons/lucide/send.svg); width:16px; height:16px"></span><span data-submit-label>Send message</span></button>
+      <span role="status" style="font-size:14px; color:rgb(var(--ink) / 0.75)" data-form-status></span>
+    </div>
+  </form>
+</section>

@@ -1,0 +1,29 @@
+---
+// Portfolio switch (Software / Design). Opened and driven by scripts/persona.ts.
+import { asset, type Persona } from '../lib/site';
+const { personas, small = false } = Astro.props as { personas: Persona[]; small?: boolean };
+---
+<div class="picker" data-picker style="position:relative; flex:none">
+  <button class:list={['icon-btn', { sm: small }]} style="overflow:hidden" aria-haspopup="menu" aria-expanded="false" data-picker-btn>
+    {personas.map(p => (
+      <span data-p={p.id} class="sr-only" data-picker-label>Switch portfolio, currently {p.title}</span>
+    ))}
+    <span data-picker-icon aria-hidden="true" style="display:flex; width:26px; height:26px">
+      {personas.map(p => (
+        <span data-p={p.id} class="logo-mask" style={`width:26px; height:26px; background:rgb(var(--ink)); --logo:url(${asset(p.logo)}); transition:background .3s`}></span>
+      ))}
+    </span>
+  </button>
+  <div role="menu" aria-label="Choose portfolio" aria-hidden="true" class="picker-menu" data-picker-menu>
+    <span style="padding:6px 12px 4px; font-family:inherit; font-size:11px; letter-spacing:0.18em; color:rgb(var(--ink) / 0.7)">PORTFOLIO</span>
+    {personas.map(p => (
+      <button role="menuitemradio" class="persona-opt" aria-checked="false" data-persona-id={p.id} tabindex="-1">
+        <span class="chip"><span aria-hidden="true" class="logo-mask" style={`--logo:url(${asset(p.logo)})`}></span></span>
+        <span style="display:flex; flex-direction:column; gap:3px; min-width:0">
+          <span class="mvg" style="font-size:19px; line-height:1.1; white-space:nowrap">{p.title}</span>
+          <span style="font-family:inherit; font-size:11px; opacity:0.7; white-space:nowrap">{p.logoName}</span>
+        </span>
+      </button>
+    ))}
+  </div>
+</div>

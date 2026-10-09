@@ -1,0 +1,30 @@
+---
+// Search overlay for the blog (opened from the nav or with "/"); scripts/blog.ts filters
+// the post index embedded below.
+import { fmtDate, type Post } from '../lib/site';
+const { posts } = Astro.props as { posts: Post[] };
+const index = posts.map(p => ({
+  slug: p.data.slug, title: p.data.title, summary: p.data.summary, tags: p.data.tags,
+  persona: p.data.persona, date: fmtDate(p.data.date),
+}));
+---
+<div role="dialog" aria-modal="true" aria-label="Search blog posts" aria-hidden="true" class="overlay" data-search style="position:fixed; inset:0; z-index:45; background:rgb(var(--scrim) / 0.74); backdrop-filter:blur(26px); -webkit-backdrop-filter:blur(26px); display:flex; justify-content:center; padding:clamp(100px,14vh,140px) clamp(16px,5vw,64px) 32px; box-sizing:border-box; overflow-y:auto">
+  <div class="search-panel" data-search-panel style="width:min(720px, 100%); display:flex; flex-direction:column; gap:18px">
+    <div style="display:flex; align-items:center; gap:10px; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:rgb(var(--ink) / 0.7)">
+      <span aria-hidden="true" style="width:10px; height:9px; background:var(--gold); clip-path:polygon(50% 0, 100% 100%, 0 100%)"></span>
+      <span style="white-space:nowrap">Search <span data-p="dev">the dev</span><span data-p="design">the design</span> blog</span>
+    </div>
+    <div class="search-ring" data-search-ring>
+      <label style="display:flex; align-items:center; gap:14px; padding:0 18px; height:64px; background:rgb(var(--glass) / 0.96); clip-path:polygon(15.6px 0, 100% 0, 100% calc(100% - 15.6px), calc(100% - 15.6px) 100%, 0 100%, 0 15.6px); color:rgb(var(--ink) / 0.75)">
+        <span class="mi" aria-hidden="true" style="--i:url(/assets/icons/lucide/search.svg); width:20px; height:20px"></span>
+        <span class="sr-only">Search posts</span>
+        <input data-search-input type="search" placeholder="Search posts, tags, topics…" autocomplete="off" spellcheck="false" aria-controls="search-results" style="flex:1; min-width:0; height:100%; border:0; outline:none; background:transparent; color:rgb(var(--ink)); font-family:inherit; font-size:clamp(17px,2.2vw,21px)">
+        <span aria-hidden="true" style="flex:none; font-size:11px; letter-spacing:0.12em; padding:4px 8px; border:1px solid rgb(var(--hi) / 0.2); clip-path:polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px); color:rgb(var(--ink) / 0.7)">ESC</span>
+      </label>
+    </div>
+    <div id="search-results" role="listbox" aria-label="Results" data-search-results style="display:flex; flex-direction:column; gap:8px"></div>
+    <div data-search-none hidden style="padding:22px 18px; border:1px dashed rgb(var(--hi) / 0.22); border-radius:16px; color:rgb(var(--ink) / 0.75)"></div>
+    <div aria-hidden="true" style="display:flex; flex-wrap:wrap; gap:8px 18px; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:rgb(var(--ink) / 0.6)"><span style="white-space:nowrap">↑ ↓ move</span><span style="white-space:nowrap">Enter open</span><span style="white-space:nowrap">Esc close</span><span style="white-space:nowrap">/ search</span></div>
+  </div>
+</div>
+<script type="application/json" data-search-index set:html={JSON.stringify(index)} />

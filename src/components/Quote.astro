@@ -1,0 +1,20 @@
+---
+// Pinned quote; scripts/quote.ts lights the words up as you scroll through it.
+import type { Site } from '../lib/site';
+const { quote } = Astro.props as { quote: Site['quote'] };
+const words = quote.text.split(/\s+/).filter(Boolean);
+---
+<section id="quote" aria-label="Favourite quote" style="position:relative; height:220vh">
+  <div style="position:sticky; top:0; height:100vh; height:100svh; display:flex; align-items:center; justify-content:center; overflow:hidden">
+    <svg data-q="tri1" aria-hidden="true" viewBox="0 0 100 87" style="position:absolute; left:50%; top:50%; width:min(86vw, 760px); height:auto; transform:translate(-50%, -50%); opacity:0; pointer-events:none; overflow:visible"><polygon points="50,1 99,86 1,86" fill="none" style="stroke:rgb(var(--ink) / 0.32)" stroke-width="1.5" vector-effect="non-scaling-stroke"></polygon></svg>
+    <svg data-q="tri2" aria-hidden="true" viewBox="0 0 100 87" style="position:absolute; left:50%; top:50%; width:min(75vw, 660px); height:auto; transform:translate(-50%, -50%); opacity:0; pointer-events:none; overflow:visible"><polygon points="50,1 99,86 1,86" fill="none" style="stroke:oklch(var(--gl) 0.07 70 / 0.45)" stroke-width="1.5" vector-effect="non-scaling-stroke"></polygon></svg>
+    <figure style="position:relative; margin:0; max-width:900px; display:flex; flex-direction:column; align-items:center; gap:26px; text-align:center; padding:0 8px">
+      <span data-q="mark" aria-hidden="true" class="mvg" style="font-size:clamp(72px,10vw,140px); line-height:0.5; height:0.45em; color:var(--gold); opacity:0">“</span>
+      <span class="sr-only">{quote.text}</span>
+      <blockquote data-q="text" aria-hidden="true" class="mvg" style="margin:0; font-size:clamp(30px,4.6vw,60px); line-height:1.12; text-wrap:balance; text-shadow:0 4px 30px rgb(var(--sh) / 0.4)">
+        {words.map(w => <Fragment><span style="display:inline-block; margin:0 0.12em; opacity:0.16; transform:translateY(0.18em); transition:color .3s ease">{w}</span>{' '}</Fragment>)}
+      </blockquote>
+      <figcaption data-q="cap" style="display:flex; align-items:center; gap:14px; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:rgb(var(--ink) / 0.75); opacity:0"><span style="width:36px; height:1px; background:rgb(var(--ink) / 0.5); transform:scaleX(0); transform-origin:right"></span>{quote.author}<span style="width:36px; height:1px; background:rgb(var(--ink) / 0.5); transform:scaleX(0); transform-origin:left"></span></figcaption>
+    </figure>
+  </div>
+</section>

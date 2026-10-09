@@ -1,0 +1,33 @@
+---
+// Sticky hero over the triangle artwork. scripts/hero.ts slides the words in and,
+// as you scroll, opens the scrim through the triangle and pushes the words out.
+import { asset, mine, type Site } from '../lib/site';
+const { site } = Astro.props as { site: Site };
+---
+<header id="top" style="position:relative; z-index:3; height:250vh; --u:max(0.05208vw, 0.09259vh); --ux:min(var(--u), 0.125vw)">
+  <div style="position:sticky; top:0; height:100vh; height:100svh; min-height:560px; overflow:hidden">
+    <h1 class="mvg" style="margin:0; font-weight:400">
+      <span class="hero-in" data-hero="0" data-dir="-1" style="will-change:transform, opacity; position:absolute; left:calc(50% - 163 * var(--ux)); top:calc(50% + 256 * var(--u) - 210 * var(--ux)); font-size:calc(46 * var(--ux)); line-height:1; color:rgb(var(--ink) / 0.62)">I'm</span>
+      <span class="hero-in" data-hero="1" data-dir="-1" style="will-change:transform, opacity; position:absolute; left:calc(50% - 256 * var(--ux)); top:calc(50% + 256 * var(--u) - 176 * var(--ux)); font-size:calc(100 * var(--ux)); line-height:1; letter-spacing:0.02em; color:rgb(var(--ink)); text-shadow:0 4px 30px rgb(var(--sh) / 0.35)">HAJI</span>
+      <span class="hero-in" data-hero="2" data-dir="1" style="will-change:transform, opacity; position:absolute; left:calc(50% - 79 * var(--ux)); top:calc(50% + 256 * var(--u) - 97 * var(--ux)); font-size:calc(96 * var(--ux)); line-height:1; letter-spacing:0.02em; color:rgb(var(--ink) / 0.42); white-space:nowrap">IBRAHIM</span>
+    </h1>
+    <div style="position:absolute; left:0; right:0; top:calc(50% + 298 * var(--u)); display:flex; flex-direction:column; align-items:center; gap:16px; padding:0 16px">
+      <div class="hero-in" data-hero="3" data-dir="-1" style="will-change:transform, opacity; display:flex; justify-content:center; width:100%">
+        {site.personas.map(p => (
+          <p data-p={p.id} class="mvg" style="margin:0; text-align:center; font-style:italic; font-size:max(16px, calc(26 * var(--ux))); line-height:1.2; color:rgb(var(--ink)); text-shadow:0 2px 16px rgb(var(--sh) / 0.55); text-wrap:balance">{p.heroTitle}</p>
+        ))}
+      </div>
+      <div class="hero-in" data-hero="4" data-dir="1" style="will-change:transform, opacity; display:flex; justify-content:center">
+        {site.personas.map(p => (
+          <div data-p={p.id} style="display:flex; justify-content:center; gap:12px">
+            {mine(site.socials, p.id).map(s => (
+              <a href={s.url} target="_blank" rel="noopener me" aria-label={s.label} title={s.label} class="social-pill">
+                <img src={asset(s.icon)} alt="" width="20" height="20" style="opacity:0.72">
+              </a>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</header>

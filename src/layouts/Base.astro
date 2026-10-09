@@ -1,0 +1,68 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { getSite } from '../lib/site';
+
+interface Props {
+  title: string;
+  description: string;
+  variant: 'home' | 'blog' | 'page';
+  image?: string;
+  type?: 'website' | 'article';
+  jsonLd?: Record<string, unknown>;
+}
+const { title, description, variant, image = '/assets/bg.webp', type = 'website', jsonLd } = Astro.props;
+const site = await getSite();
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(image, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <meta name="theme-color" content="#1d181c">
+  <link rel="canonical" href={canonical}>
+  <link rel="icon" href="/assets/logo-martiandegree.svg" type="image/svg+xml">
+  <link rel="alternate" type="application/rss+xml" title="Haji Ibrahim — Blog" href="/rss.xml">
+  <link rel="sitemap" href="/sitemap-index.xml">
+  <meta property="og:type" content={type}>
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:url" content={canonical}>
+  <meta property="og:image" content={ogImage}>
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" href="/assets/mvg.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" as="image" type="image/webp" href="/assets/bg-1920.webp" imagesrcset="/assets/bg-768.webp 768w, /assets/bg-1280.webp 1280w, /assets/bg-1920.webp 1920w" imagesizes="100vw" fetchpriority="high">
+  {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  <!-- Theme and portfolio persona are applied before first paint. -->
+  <script is:inline>(function(){var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('halim-theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');d.setAttribute('data-theme',t);var p=new URLSearchParams(location.search).get('persona')||localStorage.getItem('halim-persona')||'dev';d.setAttribute('data-persona',p==='design'?'design':'dev')}catch(e){d.setAttribute('data-persona','dev')}})();</script>
+</head>
+<body>
+  <div class="page">
+    <a href="#main" class="skip">Skip to content</a>
+    <img aria-hidden="true" alt="" src="/assets/bg-1920.webp" srcset="/assets/bg-768.webp 768w, /assets/bg-1280.webp 1280w, /assets/bg-1920.webp 1920w" sizes="100vw" width="1920" height="1080" decoding="async" fetchpriority="high" style="position:fixed; inset:0; z-index:0; width:100%; height:100%; object-fit:cover; object-position:center; filter:var(--bgf); background:rgb(var(--bg)); pointer-events:none">
+    <div aria-hidden="true" data-scrim style={`position:fixed; inset:0; z-index:1; background:linear-gradient(180deg, rgb(var(--scrim) / 0.55), rgb(var(--scrim) / 0.82)); clip-path:${variant === 'home' ? 'polygon(50% 50%, 50% 50%, 50% 50%)' : 'none'}; will-change:clip-path; pointer-events:none`}></div>
+    {variant === 'home' && (
+      <svg aria-hidden="true" data-ring style="position:fixed; inset:0; width:100%; height:100%; z-index:1; opacity:0; pointer-events:none; overflow:visible"><polygon points="0,0 0,0 0,0" fill="none" style="stroke:rgb(var(--ink) / 0.68)" stroke-width="1.5" stroke-linejoin="miter"></polygon></svg>
+    )}
+    <canvas data-snow aria-hidden="true" style="position:fixed; inset:0; width:100%; height:100%; z-index:2; pointer-events:none"></canvas>
+
+    <Nav personas={site.personas} variant={variant} />
+    <slot name="overlays" />
+    <slot />
+    <Footer name={site.name} top={variant === 'home' ? '#top' : '#main'} />
+  </div>
+  <script>
+    import '../scripts/theme';
+    import '../scripts/persona';
+    import '../scripts/snow';
+    import '../scripts/smooth-wheel';
+    import '../scripts/nav';
+  </script>
+</body>
+</html>

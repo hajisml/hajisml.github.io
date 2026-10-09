@@ -1,0 +1,26 @@
+---
+// A project card. It's a real link to /projects/<slug>/; on the home page
+// scripts/projects.ts opens the same content in a modal instead.
+import { asset, fitOf, type Project } from '../lib/site';
+const { p } = Astro.props as { p: Project };
+const { fit, pad } = fitOf(p);
+---
+<a href={`/projects/${p.slug}/`} class="card glass" data-reveal data-project={p.slug} data-cat={p.category} aria-label={`${p.title} — ${p.subtitle}. Open details`}>
+  <div class="cover" style="aspect-ratio:16 / 9; border-bottom:1px solid rgb(var(--hi) / 0.08); align-items:flex-end; justify-content:space-between; padding:14px 16px">
+    <span style="font-family:inherit; font-size:11px; color:rgb(var(--ink) / 0.68)">{p.cover ? '' : 'cover · ' + p.slug}</span>
+    {p.cover && <div role="img" aria-label={`${p.title} cover`} class="cover-img" style={`background-image:url("${asset(p.cover)}"); background-size:${fit}; padding:${pad}`}></div>}
+    {p.featured && <span style="position:relative; font-family:inherit; font-size:11px; letter-spacing:0.1em; padding:4px 10px; border-radius:999px; background:var(--gold-sel); color:rgb(var(--bg))">FEATURED</span>}
+  </div>
+  <div style="padding:22px 22px 24px; display:flex; flex-direction:column; gap:10px; flex:1">
+    <div style="display:flex; justify-content:space-between; font-family:inherit; font-size:12px; letter-spacing:0.08em">
+      <span style="color:var(--gold)">{p.category}</span>
+      <span style="color:rgb(var(--ink) / 0.7)">{p.year}</span>
+    </div>
+    <h3 style="margin:0; font-size:26px; font-weight:500; line-height:1.15">{p.title}</h3>
+    <p style="margin:0; font-size:13px; font-family:inherit; color:rgb(var(--ink) / 0.65)">{p.subtitle}</p>
+    <p style="margin:0; font-size:15px; color:rgb(var(--ink) / 0.82); text-wrap:pretty; flex:1">{p.summary}</p>
+    <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:6px">
+      {p.stack.slice(0, 4).map(t => <span class="stack-tag">{t}</span>)}
+    </div>
+  </div>
+</a>

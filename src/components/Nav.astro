@@ -1,0 +1,51 @@
+---
+// Floating pill navigation. `variant` decides which links show:
+//   home — section links + menu wheel; blog — search; page — links back to the home sections.
+import PersonaPicker from './PersonaPicker.astro';
+import ThemeButton from './ThemeButton.astro';
+import type { Persona } from '../lib/site';
+
+interface Props { personas: Persona[]; variant: 'home' | 'blog' | 'page' }
+const { personas, variant } = Astro.props;
+const home = variant === 'home';
+const blog = variant === 'blog';
+const h = (id: string) => (home ? `#${id}` : id === 'top' ? '/' : `/#${id}`);
+const left = blog ? [['Home', 'top']] : [['Home', 'top'], ['Projects', 'work']];
+const right = blog ? [] : [['About', 'about'], ['Contact', 'contact']];
+---
+<nav data-nav class:list={{ 'nav-intro': home }} aria-label="Primary" style="position:fixed; top:14px; left:50%; width:calc(100% - 28px); max-width:1080px; box-sizing:border-box; z-index:50; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 7px; border-radius:999px; backdrop-filter:blur(20px) saturate(150%); -webkit-backdrop-filter:blur(20px) saturate(150%); border:1px solid rgb(var(--hi) / 0.16); box-shadow:inset 0 1px 0 rgb(var(--hi) / 0.14), 0 18px 50px -24px rgb(var(--sh) / 0.7); transition:background .35s ease">
+  <div class="nav-desktop" style="gap:6px; flex:1; align-items:center">
+    <PersonaPicker personas={personas} />
+    <a href="/blog/" class:list={['nav-link', 'blog', { 'is-active': blog }]} aria-current={blog ? 'page' : undefined}>Blog</a>
+    <span aria-hidden="true" style="flex:none; width:1px; height:24px; margin:0 6px; background:rgb(var(--hi) / 0.22)"></span>
+    {left.map(([label, id]) => <a href={h(id)} class="nav-link" data-sec={home ? id : undefined}>{label}</a>)}
+  </div>
+  <a href={h('top')} class="nav-desktop mvg" aria-label="Halim — back to top" style="align-items:center; height:48px; padding:7px 0 0 0.18em; box-sizing:border-box; font-size:30px; letter-spacing:0.18em; line-height:1">HAlim</a>
+  <div class="nav-desktop" style="gap:6px; flex:1; justify-content:flex-end; align-items:center">
+    {right.map(([label, id]) => <a href={h(id)} class="nav-link" data-sec={home ? id : undefined}>{label}</a>)}
+    <ThemeButton />
+    {home && (
+      <button class="icon-btn menu-btn" data-menu-btn aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    )}
+    {blog && (
+      <button class="icon-btn search" data-search-btn aria-label="Search blog posts" aria-haspopup="dialog" aria-expanded="false" style="margin-left:6px"><span class="mi" data-search-icon aria-hidden="true" style="--i:url(/assets/icons/lucide/search.svg); width:19px; height:19px; transition:transform .4s var(--ease)"></span></button>
+    )}
+  </div>
+
+  <div class="nav-mobile" style="gap:2px; align-items:center; flex:none">
+    <PersonaPicker personas={personas} small />
+    <a href="/blog/" class:list={['nav-link', 'sm', { 'is-active': blog }]} aria-current={blog ? 'page' : undefined}>Blog</a>
+    <span aria-hidden="true" style="flex:none; width:1px; height:20px; margin:0 1px; background:rgb(var(--hi) / 0.22)"></span>
+    <a href={h('top')} class="nav-link sm" data-sec={home ? 'top' : undefined}>Home</a>
+  </div>
+  <a href={h('top')} class="nav-mobile mvg" style="flex:1; min-width:0; justify-content:center; align-items:center; height:48px; padding:5px 0 0 0.06em; box-sizing:border-box; font-size:clamp(16px, 5vw, 22px); letter-spacing:0.04em; line-height:1; white-space:nowrap; overflow:hidden; text-overflow:clip">HAlim</a>
+  <div class="nav-mobile" style="gap:2px; align-items:center">
+    <ThemeButton small />
+    {home && (
+      <button class="icon-btn sm menu-btn" data-menu-btn aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    )}
+    {blog && (
+      <button class="icon-btn sm search" data-search-btn aria-label="Search blog posts" aria-haspopup="dialog" aria-expanded="false"><span class="mi" data-search-icon aria-hidden="true" style="--i:url(/assets/icons/lucide/search.svg); width:19px; height:19px; transition:transform .4s var(--ease)"></span></button>
+    )}
+  </div>
+</nav>

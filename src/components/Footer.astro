@@ -1,0 +1,7 @@
+---
+const { name, top } = Astro.props as { name: string; top: string };
+---
+<footer style="position:relative; z-index:3; max-width:1240px; margin:0 auto; padding:24px clamp(16px,4vw,56px) 32px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; font-family:inherit; font-size:12px; letter-spacing:0.08em; color:rgb(var(--ink) / 0.7)">
+  <span>© {new Date().getFullYear()} {name.toUpperCase()}</span>
+  <a href={top} style="display:inline-flex; align-items:center; gap:8px; color:rgb(var(--ink) / 0.7)">BACK TO TOP<span class="mi" aria-hidden="true" style="--i:url(/assets/icons/lucide/arrow-up.svg); width:14px; height:14px"></span></a>
+</footer>
