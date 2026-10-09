@@ -5,7 +5,7 @@ import { unified } from '@astrojs/markdown-remark';
 import { rehypeProse } from './src/lib/rehype-prose.mjs';
 
 export default defineConfig({
-  site: process.env.SITE_URL || 'https://halim.pages.dev',
+  site: process.env.SITE_URL || 'https://halim-c4x.pages.dev',
   trailingSlash: 'always',
   integrations: [sitemap({ filter: page => !page.includes('/admin/') })],
   markdown: {

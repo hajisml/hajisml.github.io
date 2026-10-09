@@ -42,13 +42,14 @@ Then build with Turnstile's test site key: `PUBLIC_TURNSTILE_SITE_KEY=1x00000000
 
 ## Deploy
 
-`.github/workflows/cloudflare.yml` builds the site and runs `wrangler pages deploy` on every push to `astroworld`. Each branch gets its own preview URL (`<branch>.<project>.pages.dev`).
+`.github/workflows/cloudflare.yml` builds the site and runs `wrangler pages deploy` on every push to `astroworld`. The production branch is served at **https://halim-c4x.pages.dev**, and every other branch gets its own preview address (`<branch>.halim-c4x.pages.dev`).
 
 | Where | Name | Value |
 | --- | --- | --- |
 | GitHub secret | `CLOUDFLARE_API_TOKEN` | API token with **Cloudflare Pages: Edit** |
 | GitHub secret | `CLOUDFLARE_ACCOUNT_ID` | Your Cloudflare account ID |
 | GitHub variable | `CF_PAGES_PROJECT` | Pages project name (default `halim`) |
+| GitHub variable | `SITE_URL` | Public address used for canonical links, sitemap and RSS (now `https://halim-c4x.pages.dev`) |
 | GitHub variable | `TURNSTILE_SITE_KEY` | Public Turnstile site key (no key: the form uses `mailto:`) |
 | Pages secret | `TURNSTILE_SECRET` | Turnstile secret key |
 | Pages secret | `RESEND_API_KEY` | Resend API key |

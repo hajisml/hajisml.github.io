@@ -1,8 +1,8 @@
 name: Deploy to Cloudflare Pages
 
 # Builds the Astro site and uploads it (plus functions/) to Cloudflare Pages.
-# Each branch gets its own URL: <branch>.<project>.pages.dev; the project's
-# production branch is served at <project>.pages.dev.
+# Each branch gets its own URL: <branch>.halim-c4x.pages.dev; the project's
+# production branch is served at https://halim-c4x.pages.dev.
 on:
   push:
     branches: [astroworld]
@@ -30,7 +30,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          SITE_URL: https://${{ vars.CF_PAGES_PROJECT || 'halim' }}.pages.dev
+          SITE_URL: ${{ vars.SITE_URL || 'https://halim-c4x.pages.dev' }}
           PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.TURNSTILE_SITE_KEY }}
       - name: Create the Pages project on first run
         # Fails harmlessly once the project exists; real auth errors surface in the deploy step.
