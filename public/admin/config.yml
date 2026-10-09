@@ -2,10 +2,10 @@
 # branch, which deploys to https://hajisml.github.io/staging/. Run
 # Actions → "Promote to production" to publish staging to the live site.
 #
-# Sign in: open /admin/ → "Sign In with Token" → paste a fine-grained GitHub
-# personal access token scoped to this repo with Contents: Read and write.
-# No OAuth proxy needed. To use "Sign In with GitHub" instead, deploy an
-# OAuth proxy (e.g. sveltia-cms-auth on Cloudflare Workers) and set base_url.
+# Sign in: "Sign In with GitHub" goes through our sveltia-cms-auth Worker (base_url),
+# which only serves the domains in its ALLOWED_DOMAINS. auth_scope keeps the
+# GitHub token to public repos. "Sign In Using Access Token" with a fine-grained
+# token limited to this repo still works too.
 #
 # Local editing: open http://localhost:8000/admin/ in a Chromium-based browser
 # and choose "Work with Local Repository" — changes are written straight to disk.
@@ -13,7 +13,8 @@ backend:
   name: github
   repo: hajisml/hajisml.github.io
   branch: staging
-  # base_url: https://your-oauth-proxy.example.workers.dev
+  base_url: https://sveltia-cms-auth.freakerzoidd.workers.dev
+  auth_scope: public_repo
 
 site_url: https://hajisml.github.io/staging/
 display_url: https://hajisml.github.io
