@@ -1,8 +1,9 @@
 {
   "projects": [
     {
-      "slug": "kamugram",
+      "persona": "dev",
       "title": "Kamugram",
+      "slug": "kamugram",
       "subtitle": "Swahili search engine & Telegram bot",
       "year": "2025",
       "category": "Backend",
@@ -18,18 +19,19 @@
         "aiogram",
         "SQLite FTS5",
         "Redis",
-        "Podman",
+        "Podman/Docker",
         "Gemini"
       ],
       "cover": "",
+      "coverFit": "cover",
       "repo": "https://github.com/hajisml/kamugram",
       "live": "",
-      "persona": "dev",
-      "coverFit": "cover"
+      "source": ""
     },
     {
-      "slug": "go-forum",
+      "persona": "dev",
       "title": "Forum",
+      "slug": "go-forum",
       "subtitle": "High-concurrency discussion platform",
       "year": "2025",
       "category": "Systems",
@@ -46,14 +48,15 @@
         "Docker"
       ],
       "cover": "",
+      "coverFit": "cover",
       "repo": "",
       "live": "",
-      "persona": "dev",
-      "coverFit": "cover"
+      "source": ""
     },
     {
-      "slug": "voltpass",
+      "persona": "dev",
       "title": "VoltPass",
+      "slug": "voltpass",
       "subtitle": "Telegram credential manager",
       "year": "2024",
       "category": "Backend",
@@ -71,14 +74,15 @@
         "Linux"
       ],
       "cover": "",
+      "coverFit": "cover",
       "repo": "https://github.com/hajisml/voltpass",
       "live": "",
-      "persona": "dev",
-      "coverFit": "cover"
+      "source": ""
     },
     {
-      "slug": "net-cat",
+      "persona": "dev",
       "title": "Net-Cat",
+      "slug": "net-cat",
       "subtitle": "TCP group chat utility",
       "year": "2025",
       "category": "Systems",
@@ -94,14 +98,15 @@
         "Sockets"
       ],
       "cover": "",
+      "coverFit": "cover",
       "repo": "",
       "live": "",
-      "persona": "dev",
-      "coverFit": "cover"
+      "source": ""
     },
     {
-      "slug": "max-flow-router",
+      "persona": "dev",
       "title": "Max-Flow Router",
+      "slug": "max-flow-router",
       "subtitle": "Graph routing with Edmonds-Karp",
       "year": "2025",
       "category": "Algorithms",
@@ -116,14 +121,15 @@
         "Graphs"
       ],
       "cover": "",
+      "coverFit": "cover",
       "repo": "",
       "live": "",
-      "persona": "dev",
-      "coverFit": "cover"
+      "source": ""
     },
     {
-      "slug": "dawatrace",
+      "persona": "dev",
       "title": "Dawatrace",
+      "slug": "dawatrace",
       "subtitle": "Pharma provenance on Polygon",
       "year": "2025",
       "category": "Hackathon",
@@ -139,14 +145,15 @@
         "React"
       ],
       "cover": "",
+      "coverFit": "cover",
       "repo": "",
       "live": "",
-      "persona": "dev",
-      "coverFit": "cover"
+      "source": ""
     },
     {
-      "slug": "agrismart",
+      "persona": "dev",
       "title": "Agrismart",
+      "slug": "agrismart",
       "subtitle": "Offline-first farming PWA",
       "year": "2025",
       "category": "Hackathon",
@@ -161,14 +168,15 @@
         "JavaScript"
       ],
       "cover": "",
+      "coverFit": "cover",
       "repo": "",
       "live": "",
-      "persona": "dev",
-      "coverFit": "cover"
+      "source": ""
     },
     {
-      "slug": "propersats",
+      "persona": "dev",
       "title": "ProperSats",
+      "slug": "propersats",
       "subtitle": "Bitcoin multi-sig land listings",
       "year": "2025",
       "category": "Hackathon",
@@ -183,19 +191,19 @@
         "Multi-sig"
       ],
       "cover": "",
+      "coverFit": "cover",
       "repo": "",
       "live": "",
-      "persona": "dev",
-      "coverFit": "cover"
+      "source": ""
     },
     {
-      "slug": "club-nilotes-pattern",
+      "persona": "design",
       "title": "Club Nilotes Pattern",
+      "slug": "club-nilotes-pattern",
       "subtitle": "Brand pattern",
       "year": "",
       "category": "Pattern",
       "featured": true,
-      "persona": "design",
       "summary": "Club Nilotes Pattern — published on Behance by Yitchware Graphics.",
       "highlights": [
         "Full case study and imagery on Behance."
@@ -211,13 +219,13 @@
       "source": "behance"
     },
     {
-      "slug": "logos",
+      "persona": "design",
       "title": "Logos",
+      "slug": "logos",
       "subtitle": "Logo collection",
       "year": "",
       "category": "Branding",
       "featured": true,
-      "persona": "design",
       "summary": "Logos — published on Behance by Yitchware Graphics.",
       "highlights": [
         "Full case study and imagery on Behance."
@@ -233,13 +241,13 @@
       "source": "behance"
     },
     {
-      "slug": "predator-energy-ad",
+      "persona": "design",
       "title": "Predator Energy Advertisement",
+      "slug": "predator-energy-ad",
       "subtitle": "Product advertisement",
       "year": "",
       "category": "Advertising",
       "featured": true,
-      "persona": "design",
       "summary": "Predator Energy Advertisement — published on Behance by Yitchware Graphics.",
       "highlights": [
         "Full case study and imagery on Behance."
@@ -255,8 +263,9 @@
       "source": "behance"
     },
     {
-      "slug": "halim-artwork",
+      "persona": "design",
       "title": "HALIM",
+      "slug": "halim-artwork",
       "subtitle": "Key artwork & personal identity",
       "year": "2021",
       "category": "Artwork",
@@ -273,13 +282,14 @@
       ],
       "cover": "assets/bg.webp",
       "coverFit": "cover",
-      "persona": "design",
       "repo": "",
-      "live": "https://behance.net/yitchware"
+      "live": "https://behance.net/yitchware",
+      "source": ""
     },
     {
-      "slug": "yitchware",
+      "persona": "design",
       "title": "Yitchware",
+      "slug": "yitchware",
       "subtitle": "Brand mark",
       "year": "",
       "category": "Branding",
@@ -295,13 +305,14 @@
       ],
       "cover": "assets/logo-yitchware.svg",
       "coverFit": "contain",
-      "persona": "design",
       "repo": "",
-      "live": "https://behance.net/yitchware"
+      "live": "https://behance.net/yitchware",
+      "source": ""
     },
     {
-      "slug": "martian-degree",
+      "persona": "design",
       "title": "Martian Degree",
+      "slug": "martian-degree",
       "subtitle": "Brand mark",
       "year": "",
       "category": "Branding",
@@ -317,13 +328,14 @@
       ],
       "cover": "assets/logo-martiandegree.svg",
       "coverFit": "contain",
-      "persona": "design",
       "repo": "",
-      "live": "https://behance.net/yitchware"
+      "live": "https://behance.net/yitchware",
+      "source": ""
     },
     {
-      "slug": "mynt-redesign",
+      "persona": "design",
       "title": "Mynt App Redesign",
+      "slug": "mynt-redesign",
       "subtitle": "Mobile UX redesign",
       "year": "2024",
       "category": "UI/UX",
@@ -340,9 +352,9 @@
       ],
       "cover": "",
       "coverFit": "cover",
-      "persona": "design",
       "repo": "",
-      "live": "https://behance.net/yitchware"
+      "live": "https://behance.net/yitchware",
+      "source": ""
     }
   ]
 }
