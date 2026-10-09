@@ -27,43 +27,43 @@
     {
       "label": "GitHub",
       "url": "https://github.com/hajisml",
-      "icon": "https://cdn.jsdelivr.net/npm/simple-icons@9.21.0/icons/github.svg",
+      "icon": "assets/icons/si/github.svg",
       "persona": "dev"
     },
     {
       "label": "Behance",
       "url": "https://behance.net/yitchware",
-      "icon": "https://cdn.jsdelivr.net/npm/simple-icons@9.21.0/icons/behance.svg",
+      "icon": "assets/icons/si/behance.svg",
       "persona": "design"
     },
     {
       "label": "LinkedIn",
       "url": "https://linkedin.com/in/hajisml",
-      "icon": "https://cdn.jsdelivr.net/npm/simple-icons@9.21.0/icons/linkedin.svg",
+      "icon": "assets/icons/si/linkedin.svg",
       "persona": "dev"
     },
     {
       "label": "Email",
       "url": "mailto:hajisml@outlook.com",
-      "icon": "https://cdn.jsdelivr.net/npm/simple-icons@9.21.0/icons/maildotru.svg",
+      "icon": "assets/icons/si/maildotru.svg",
       "persona": "dev"
     },
     {
       "label": "Email",
       "url": "mailto:yitchware@gmail.com",
-      "icon": "https://cdn.jsdelivr.net/npm/simple-icons@9.21.0/icons/maildotru.svg",
+      "icon": "assets/icons/si/maildotru.svg",
       "persona": "design"
     },
     {
       "label": "Instagram",
       "url": "https://instagram.com/yitchware",
-      "icon": "https://cdn.jsdelivr.net/npm/simple-icons@9.21.0/icons/instagram.svg",
+      "icon": "assets/icons/si/instagram.svg",
       "persona": "design"
     },
     {
       "label": "X",
       "url": "https://twitter.com/yitchware",
-      "icon": "https://cdn.jsdelivr.net/npm/simple-icons@9.21.0/icons/x.svg",
+      "icon": "assets/icons/si/x.svg",
       "persona": "design"
     }
   ],
