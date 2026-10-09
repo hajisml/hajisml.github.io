@@ -1,0 +1,153 @@
+# Sveltia CMS (Decap-compatible). Edits content/ and commits to GitHub;
+# the Pages workflow rebuilds and deploys on every push to main.
+#
+# Sign in: open /admin/ → "Sign In with Token" → paste a fine-grained GitHub
+# personal access token scoped to this repo with Contents: Read and write.
+# No OAuth proxy needed. To use "Sign In with GitHub" instead, deploy an
+# OAuth proxy (e.g. sveltia-cms-auth on Cloudflare Workers) and set base_url.
+#
+# Local editing: open http://localhost:8000/admin/ in a Chromium-based browser
+# and choose "Work with Local Repository" — changes are written straight to disk.
+backend:
+  name: github
+  repo: hajisml/hajisml.github.io
+  branch: main
+  # base_url: https://your-oauth-proxy.example.workers.dev
+
+site_url: https://hajisml.github.io
+display_url: https://hajisml.github.io
+media_folder: assets/uploads
+public_folder: /assets/uploads
+
+collections:
+  - name: projects
+    label: Projects
+    files:
+      - name: projects
+        label: All projects
+        file: content/projects.json
+        fields:
+          - name: projects
+            label: Projects
+            widget: list
+            summary: "{{fields.title}} — {{fields.year}}"
+            fields:
+              - { name: persona, label: Persona, widget: select, options: [{ label: Software, value: dev }, { label: Design, value: design }], default: dev }
+              - { name: title, label: Title, widget: string }
+              - { name: slug, label: "Slug (URL id, lowercase-dashes)", widget: string }
+              - { name: subtitle, label: Subtitle, widget: string }
+              - { name: year, label: Year, widget: string, required: false }
+              - { name: category, label: Category, widget: select, options: [Backend, Systems, Algorithms, Frontend, Hackathon, Branding, Pattern, Advertising, Artwork, UI/UX] }
+              - { name: featured, label: Featured, widget: boolean, default: false }
+              - { name: summary, label: Summary, widget: text }
+              - { name: highlights, label: Highlights, widget: list, field: { name: item, label: Point, widget: text } }
+              - { name: stack, label: Stack, widget: list }
+              - { name: cover, label: "Cover image (16:9)", widget: image, required: false }
+              - { name: coverFit, label: "Cover fit (contain for logos)", widget: select, options: [cover, contain], default: cover }
+              - { name: repo, label: Repository URL, widget: string, required: false }
+              - { name: live, label: Live URL, widget: string, required: false }
+              - { name: source, label: "Source (e.g. behance)", widget: string, required: false }
+
+  - name: blog
+    label: Blog
+    label_singular: Post
+    folder: content/blog
+    extension: md
+    format: json-frontmatter
+    frontmatter_delimiter: ["---", "---"]
+    create: true
+    slug: "{{fields.slug}}"
+    identifier_field: title
+    summary: "{{fields.date}} · {{fields.title}}"
+    sortable_fields: [date, title]
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: slug, label: "Slug (URL id, lowercase-dashes)", widget: string }
+      - { name: date, label: Date, widget: datetime, format: YYYY-MM-DD, date_format: YYYY-MM-DD, time_format: false }
+      - { name: summary, label: Summary, widget: text }
+      - { name: cover, label: Cover image, widget: image, required: false }
+      - { name: tags, label: Tags, widget: list, required: false }
+      - { name: persona, label: Persona, widget: select, options: [{ label: Software, value: dev }, { label: Design, value: design }], default: dev }
+      - { name: canonical, label: "Canonical URL (if cross-posted)", widget: string, required: false }
+      - { name: readMins, label: "Read time in minutes (blank = auto)", widget: number, required: false }
+      - { name: draft, label: Draft (hidden from site), widget: boolean, default: false }
+      - { name: body, label: Body, widget: markdown }
+
+  - name: site
+    label: Site
+    files:
+      - name: site
+        label: Profile & sections
+        file: content/site.json
+        fields:
+          - { name: name, label: Full name, widget: string }
+          - { name: brand, label: Brand, widget: string }
+          - { name: role, label: Role, widget: string }
+          - { name: location, label: Location, widget: string }
+          - { name: email, label: Email, widget: string }
+          - { name: availability, label: Availability, widget: string }
+          - { name: resume, label: Résumé PDF, widget: file }
+          - name: personas
+            label: Personas (portfolio switch)
+            widget: list
+            summary: "{{fields.label}}"
+            fields:
+              - { name: id, label: "Id (dev / design)", widget: string }
+              - { name: label, label: Switch label, widget: string }
+              - { name: title, label: Title, widget: string }
+              - { name: email, label: Contact email, widget: string }
+              - { name: logo, label: "Logo (single-colour SVG)", widget: file }
+              - { name: logoName, label: Logo name, widget: string }
+              - { name: heroTitle, label: Hero title (under name), widget: string }
+              - { name: tagline, label: Tagline, widget: string }
+              - { name: focus, label: Focus, widget: string }
+              - { name: availability, label: Availability, widget: string }
+              - { name: intro, label: About intro, widget: text }
+              - { name: about, label: About paragraphs, widget: list, field: { name: p, label: Paragraph, widget: text } }
+              - name: learning
+                label: Currently learning
+                widget: list
+                fields: [{ name: title, label: Title, widget: string }, { name: since, label: Since, widget: string }, { name: detail, label: Detail, widget: text }, { name: topics, label: Topics, widget: list }]
+              - name: skills
+                label: Skill groups
+                widget: list
+                fields: [{ name: group, label: Group, widget: string }, { name: items, label: Items, widget: list }]
+          - name: facts
+            label: Facts
+            widget: list
+            fields: [{ name: persona, label: Persona, widget: select, options: [{ label: Both, value: all }, { label: Software, value: dev }, { label: Design, value: design }], default: all }, { name: k, label: Label, widget: string }, { name: v, label: Value, widget: string }]
+          - name: socials
+            label: Social links
+            widget: list
+            fields: [{ name: persona, label: Persona, widget: select, options: [{ label: Both, value: all }, { label: Software, value: dev }, { label: Design, value: design }], default: all }, { name: label, label: Label, widget: string }, { name: url, label: URL, widget: string }, { name: icon, label: Icon URL, widget: string }]
+          - name: experience
+            label: Experience
+            widget: list
+            summary: "{{fields.role}} · {{fields.company}}"
+            fields:
+              - { name: persona, label: Persona, widget: select, options: [{ label: Both, value: all }, { label: Software, value: dev }, { label: Design, value: design }], default: all }
+              - { name: company, label: Company, widget: string }
+              - { name: role, label: Role, widget: string }
+              - { name: period, label: Period, widget: string }
+              - { name: location, label: Location, widget: string }
+              - { name: points, label: Points, widget: list, field: { name: p, label: Point, widget: text } }
+          - name: quote
+            label: Favourite quote
+            widget: object
+            fields: [{ name: text, label: Quote, widget: text }, { name: author, label: Author, widget: string }]
+          - name: education
+            label: Education
+            widget: list
+            fields:
+              - { name: school, label: School, widget: string }
+              - { name: degree, label: Degree, widget: string }
+              - { name: detail, label: Detail, widget: string }
+              - { name: year, label: Year, widget: string }
+              - { name: location, label: Location, widget: string }
+          - name: contact
+            label: Contact
+            widget: object
+            fields:
+              - { name: heading, label: Heading, widget: string }
+              - { name: blurb, label: Blurb, widget: text }
+              - { name: formspree, label: "Formspree endpoint (blank = mailto)", widget: string, required: false }
