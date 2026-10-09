@@ -1,0 +1,39 @@
+name: Attach custom domain to Cloudflare Pages
+
+# is-a.dev is on the Public Suffix List, so the Cloudflare dashboard can't add
+# halim.is-a.dev to the Pages project — it has to go through the API.
+# Safe to re-run: it only adds the domain if it isn't attached yet, then prints its status.
+on:
+  workflow_dispatch:
+    inputs:
+      domain:
+        description: Custom domain to attach
+        default: halim.is-a.dev
+  push:
+    branches: [astroworld]
+    paths: [.github/workflows/pages-domain.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  attach:
+    runs-on: ubuntu-latest
+    env:
+      DOMAIN: ${{ inputs.domain || 'halim.is-a.dev' }}
+      PROJECT: ${{ vars.CF_PAGES_PROJECT || 'halim' }}
+      CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - name: Attach and report
+        run: |
+          api="https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/pages/projects/$PROJECT/domains"
+          auth=(-H "Authorization: Bearer $CF_TOKEN" -H "Content-Type: application/json")
+          code=$(curl -s -o domain.json -w '%{http_code}' "${auth[@]}" "$api/$DOMAIN")
+          if [ "$code" = 404 ]; then
+            echo "Attaching $DOMAIN to $PROJECT…"
+            curl -sf "${auth[@]}" -X POST "$api" -d "{\"name\":\"$DOMAIN\"}" -o domain.json
+          elif [ "$code" != 200 ]; then
+            echo "::error::Cloudflare API returned $code"; cat domain.json; exit 1
+          fi
+          jq '.result | {name, status, verification_data, validation_data}' domain.json
