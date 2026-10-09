@@ -47,7 +47,7 @@ jobs:
           bash prod/scripts/stage-site.sh prod _site
           bash prod/scripts/stage-site.sh stg _site/staging staging
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
       - id: deployment
