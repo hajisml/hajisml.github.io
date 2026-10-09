@@ -16,9 +16,9 @@ The page is one static file (`index.html`, rendered in the browser by `support.j
 
 ## Editing
 
-**In the browser (CMS):** open https://hajisml.github.io/admin/, choose *Sign In with Token*, and paste a [fine-grained personal access token](https://github.com/settings/personal-access-tokens/new) that only covers `hajisml/hajisml.github.io` and has **Contents: Read and write**. Each save is committed to `main`, and the site redeploys within a minute or two.
+**In the browser (CMS):** open https://hajisml.github.io/admin/, choose *Sign In with Token*, and paste a [fine-grained personal access token](https://github.com/settings/personal-access-tokens/new) that only covers `hajisml/hajisml.github.io` and has **Contents: Read and write**. Each save is committed to the `staging` branch and shows up on the staging site within a minute or two.
 
-**By hand / with Claude Code:** edit the JSON or Markdown files and push to `main`. To add a post, copy `content/blog/propersats.md` and change its front matter and body.
+**By hand / with Claude Code:** edit the JSON or Markdown files on the `staging` branch and push. To add a post, copy `content/blog/propersats.md` and change its front matter and body.
 
 ## Running locally
 
@@ -29,9 +29,25 @@ python3 -m http.server 8000      # then open http://localhost:8000
 
 Opening `index.html` straight from disk won't work, because the page fetches `content/` over HTTP. For a local CMS, open http://localhost:8000/admin/ in a Chromium-based browser and choose *Work with Local Repository*. It writes straight to your working copy.
 
+## Staging & production
+
+| Branch | Site |
+| --- | --- |
+| `staging` | https://hajisml.github.io/staging/ (hidden from search engines, marked with a STAGING badge) |
+| `main` | https://hajisml.github.io |
+
+1. Edits (CMS or by hand) go to `staging`. Check them on the staging site.
+2. When you're happy, open **Actions → Promote to production → Run workflow**. It fast-forwards `main` to `staging` and redeploys.
+
+**Hotfix straight to production:** push to `main`, then bring staging up to date with `git checkout staging && git merge main && git push`. Promote refuses to run while `main` has commits that `staging` doesn't.
+
 ## Deploy
 
-`.github/workflows/pages.yml` runs on every push to `main`: it builds the blog index, collects the site files, and deploys them to GitHub Pages. One-time setup: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+`.github/workflows/pages.yml` runs on every push to `main` or `staging`. It builds both branches (`main` at `/`, `staging` at `/staging/`) with `scripts/build-content.mjs` and `scripts/stage-site.sh`, then publishes them as one GitHub Pages deployment.
+
+One-time setup, already done:
+- **Settings → Pages → Source:** GitHub Actions.
+- **Settings → Environments → github-pages:** allows both `main` and `staging` to deploy.
 
 ## Contact form
 

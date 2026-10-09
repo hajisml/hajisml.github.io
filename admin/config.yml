@@ -1,5 +1,6 @@
-# Sveltia CMS (Decap-compatible). Edits content/ and commits to GitHub;
-# the Pages workflow rebuilds and deploys on every push to main.
+# Sveltia CMS (Decap-compatible). Edits content/ and commits to the staging
+# branch, which deploys to https://hajisml.github.io/staging/. Run
+# Actions → "Promote to production" to publish staging to the live site.
 #
 # Sign in: open /admin/ → "Sign In with Token" → paste a fine-grained GitHub
 # personal access token scoped to this repo with Contents: Read and write.
@@ -11,13 +12,13 @@
 backend:
   name: github
   repo: hajisml/hajisml.github.io
-  branch: main
+  branch: staging
   # base_url: https://your-oauth-proxy.example.workers.dev
 
-site_url: https://hajisml.github.io
+site_url: https://hajisml.github.io/staging/
 display_url: https://hajisml.github.io
 media_folder: assets/uploads
-public_folder: /assets/uploads
+public_folder: assets/uploads
 
 collections:
   - name: projects

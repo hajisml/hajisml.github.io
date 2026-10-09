@@ -1,3 +1,4 @@
 User-agent: *
 Disallow: /admin/
+Disallow: /staging/
 Sitemap: https://hajisml.github.io/sitemap.xml

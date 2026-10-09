@@ -1,9 +1,11 @@
 name: Deploy site
 
+# Every deploy publishes both branches: main at / and staging at /staging/.
 on:
   push:
-    branches: [main]
+    branches: [main, staging]
   workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: read
@@ -12,7 +14,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -22,15 +24,28 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
+          path: prod
+      - name: Check out staging (falls back to main)
+        run: |
+          if git -C prod ls-remote --exit-code --heads origin staging >/dev/null; then
+            git -C prod fetch --depth 1 origin staging
+            git -C prod worktree add ../stg FETCH_HEAD
+          else
+            cp -r prod stg
+          fi
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Build blog index
-        run: node scripts/build-content.mjs
+      - name: Build blog indexes
+        run: |
+          node prod/scripts/build-content.mjs
+          node stg/scripts/build-content.mjs
       - name: Stage site
         run: |
-          mkdir _site
-          cp -r index.html support.js 404.html robots.txt sitemap.xml .nojekyll admin assets content _site/
+          bash prod/scripts/stage-site.sh prod _site
+          bash prod/scripts/stage-site.sh stg _site/staging staging
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

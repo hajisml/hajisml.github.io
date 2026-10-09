@@ -1,0 +1,38 @@
+name: Promote to production
+
+# Fast-forwards main to staging, then redeploys. Run it from the Actions tab.
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: promote
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fast-forward main to staging
+        run: |
+          git fetch origin main staging
+          if ! git merge-base --is-ancestor origin/main origin/staging; then
+            echo "::error::main has commits that staging doesn't. Merge main into staging first, then promote again."
+            exit 1
+          fi
+          if [ "$(git rev-parse origin/main)" = "$(git rev-parse origin/staging)" ]; then
+            echo "main already matches staging."
+          else
+            git push origin origin/staging:refs/heads/main
+          fi
+
+  deploy:
+    needs: promote
+    uses: ./.github/workflows/pages.yml
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
