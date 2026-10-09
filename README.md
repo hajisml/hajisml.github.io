@@ -1,58 +1,72 @@
-# hajisml.github.io
+# hajisml portfolio — Astro on Cloudflare Pages
 
-Portfolio and blog for Haji Ismael Ibrahim (Halim), served from GitHub Pages at https://hajisml.github.io.
+Portfolio and blog for Haji Ismael Ibrahim (Halim). This branch (`astroworld`) is the Astro rewrite. It deploys to Cloudflare Pages, while the original site keeps running from `main` on GitHub Pages until cutover.
 
-The page is one static file (`index.html`, rendered in the browser by `support.js`). Everything it shows comes from `content/`, so changing the site means changing content, not code.
+- **Static pages:** Astro renders every page to HTML at build time, with real URLs for each project (`/projects/<slug>/`) and post (`/blog/<slug>/`), plus RSS and a sitemap.
+- **Content:** it lives in `content/`, in the same format the CMS already edits. Schemas in `src/content.config.ts` check it, so a bad edit fails the build instead of breaking the live page.
+- **No framework:** the interactive parts (hero intro, scroll effects, snow, menu wheel, persona switch, search, project modal) are small TypeScript modules in `src/scripts/`, with no React.
+- **Security:** a strict Content-Security-Policy and security headers are generated at build time by `scripts/csp.mjs`.
+- **Contact form:** a Cloudflare Pages Function (`functions/api/contact.ts`) checks the message with Turnstile and sends it through Resend.
 
-## Content
+## Layout
 
-| File | What it holds |
+| Path | What it is |
 | --- | --- |
-| `content/site.json` | Profile, personas (Software / Design switch), facts, socials, experience, education, quote, contact |
-| `content/projects.json` | Projects. Featured ones are shown first. Each gets a deep link: `/#project/<slug>` |
-| `content/blog/*.md` | Blog posts: JSON front matter between `---` lines, then Markdown. Deep link: `/#blog/<slug>` |
-| `content/blog/posts.json` | **Generated** index of posts. Don't edit it; run `node scripts/build-content.mjs` |
-| `assets/uploads/` | Images uploaded through the CMS |
+| `content/` | `site.json`, `projects.json`, `blog/*.md` (JSON front matter between `---` lines) |
+| `src/pages/` | Routes: `/`, `/projects/[slug]/`, `/blog/`, `/blog/[slug]/`, `/rss.xml`, 404 |
+| `src/components/` | Page sections (Hero, Work, About, Quote, Experience, Skills, Learning, Contact, …) |
+| `src/scripts/` | Client behaviour, one module per feature |
+| `src/styles/global.css` | Design tokens and component styles |
+| `public/` | Static files: `assets/` (fonts, icons, images, CV), `admin/` (CMS) |
+| `functions/api/contact.ts` | Contact form endpoint |
+| `scripts/csp.mjs` | Post-build `_headers` generator (CSP hashes, caching) |
 
-## Editing
-
-**In the browser (CMS):** open https://hajisml.github.io/admin/, choose *Sign In with Token*, and paste a [fine-grained personal access token](https://github.com/settings/personal-access-tokens/new) that only covers `hajisml/hajisml.github.io` and has **Contents: Read and write**. Each save is committed to the `staging` branch and shows up on the staging site within a minute or two.
-
-**By hand / with Claude Code:** edit the JSON or Markdown files on the `staging` branch and push. To add a post, copy `content/blog/propersats.md` and change its front matter and body.
-
-## Running locally
+## Develop
 
 ```sh
-node scripts/build-content.mjs   # refresh the blog index after adding or changing posts
-python3 -m http.server 8000      # then open http://localhost:8000
+npm install
+npm run dev        # http://localhost:4321 with live reload
+npm run build      # static build into dist/ and dist/_headers
+npm run preview    # Cloudflare runtime locally (headers + /api/contact) on http://localhost:8788
+npm run check      # type-check
 ```
 
-Opening `index.html` straight from disk won't work, because the page fetches `content/` over HTTP. For a local CMS, open http://localhost:8000/admin/ in a Chromium-based browser and choose *Work with Local Repository*. It writes straight to your working copy.
+For the contact form locally, put secrets in `.dev.vars` (git-ignored):
 
-## Staging & production
+```
+TURNSTILE_SECRET=1x0000000000000000000000000000000AA
+RESEND_API_KEY=re_...
+```
 
-| Branch | Site |
-| --- | --- |
-| `staging` | https://hajisml.github.io/staging/ (hidden from search engines, marked with a STAGING badge) |
-| `main` | https://hajisml.github.io |
-
-1. Edits (CMS or by hand) go to `staging`. Check them on the staging site.
-2. When you're happy, open **Actions → Promote to production → Run workflow**. It fast-forwards `main` to `staging` and redeploys.
-
-**Hotfix straight to production:** push to `main`, then bring staging up to date with `git checkout staging && git merge main && git push`. Promote refuses to run while `main` has commits that `staging` doesn't.
+Then build with Turnstile's test site key: `PUBLIC_TURNSTILE_SITE_KEY=1x00000000000000000000AA npm run build`.
 
 ## Deploy
 
-`.github/workflows/pages.yml` runs on every push to `main` or `staging`. It builds both branches (`main` at `/`, `staging` at `/staging/`) with `scripts/build-content.mjs` and `scripts/stage-site.sh`, then publishes them as one GitHub Pages deployment.
+`.github/workflows/cloudflare.yml` builds the site and runs `wrangler pages deploy` on every push to `astroworld`. Each branch gets its own preview URL (`<branch>.<project>.pages.dev`).
 
-One-time setup, already done:
-- **Settings → Pages → Source:** GitHub Actions.
-- **Settings → Environments → github-pages:** allows both `main` and `staging` to deploy.
+| Where | Name | Value |
+| --- | --- | --- |
+| GitHub secret | `CLOUDFLARE_API_TOKEN` | API token with **Cloudflare Pages: Edit** |
+| GitHub secret | `CLOUDFLARE_ACCOUNT_ID` | Your Cloudflare account ID |
+| GitHub variable | `CF_PAGES_PROJECT` | Pages project name (default `halim`) |
+| GitHub variable | `TURNSTILE_SITE_KEY` | Public Turnstile site key (no key: the form uses `mailto:`) |
+| Pages secret | `TURNSTILE_SECRET` | Turnstile secret key |
+| Pages secret | `RESEND_API_KEY` | Resend API key |
+| `wrangler.toml` var | `CONTACT_TO` | Inbox that receives messages. On Resend's free tier without a verified domain, this must be the Resend account's own address |
 
-## Contact form
+Set the Pages secrets with `npx wrangler pages secret put TURNSTILE_SECRET --project-name halim` (and the same for `RESEND_API_KEY`).
 
-Leave `contact.formspree` blank to fall back to `mailto:`, or paste a Formspree endpoint to receive submissions.
+## Contact form and spam
 
-## Design source
+1. Spam traps run in the browser: a hidden field that only bots fill, plus a minimum time on the form.
+2. Turnstile (invisible unless it's unsure) issues a token, and the function verifies it with Cloudflare before sending.
+3. The function checks the request's origin and content type, validates and caps every field, and escapes the HTML email.
+4. If the secrets aren't configured, the function returns 503 and the page falls back to `mailto:`.
 
-The design lives in Claude Design (`Portfolio.dc.html`). If it changes, re-export it to `index.html` and carry over one local edit: in `md2html` the leading front matter is stripped (`.replace(/^---\n[\s\S]*?\n---\n?/, '')`).
+## CMS
+
+Sveltia CMS lives at `/admin/` (`public/admin/`) and still commits to the `staging` branch. Its content format is unchanged, so the old and new sites read the same files.
+
+**At cutover:**
+- Point `media_folder` at `public/assets/uploads`.
+- Move any files uploaded in the meantime from `assets/uploads/` into `public/assets/uploads/`.
