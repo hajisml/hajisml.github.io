@@ -1,0 +1,282 @@
+{
+  "name": "Haji Ismael Ibrahim",
+  "brand": "HALIM",
+  "role": "Software Engineer",
+  "location": "Kisumu, Kenya",
+  "email": "hajisml@outlook.com",
+  "availability": "Open to backend & distributed systems roles",
+  "resume": "assets/Haji_Ismael_Ibrahim_CV.pdf",
+  "facts": [
+    {
+      "k": "Based in",
+      "v": "Kisumu, Kenya",
+      "persona": "all"
+    },
+    {
+      "k": "Currently",
+      "v": "Software Engineering Apprentice, Zone01 Kisumu",
+      "persona": "dev"
+    },
+    {
+      "k": "Languages",
+      "v": "English & Swahili (native), Arabic (intermediate)",
+      "persona": "all"
+    }
+  ],
+  "socials": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/hajisml",
+      "icon": "https://cdn.jsdelivr.net/npm/simple-icons@9.21.0/icons/github.svg",
+      "persona": "dev"
+    },
+    {
+      "label": "Behance",
+      "url": "https://behance.net/yitchware",
+      "icon": "https://cdn.jsdelivr.net/npm/simple-icons@9.21.0/icons/behance.svg",
+      "persona": "design"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://linkedin.com/in/hajisml",
+      "icon": "https://cdn.jsdelivr.net/npm/simple-icons@9.21.0/icons/linkedin.svg",
+      "persona": "dev"
+    },
+    {
+      "label": "Email",
+      "url": "mailto:hajisml@outlook.com",
+      "icon": "https://cdn.jsdelivr.net/npm/simple-icons@9.21.0/icons/maildotru.svg",
+      "persona": "dev"
+    },
+    {
+      "label": "Email",
+      "url": "mailto:yitchware@gmail.com",
+      "icon": "https://cdn.jsdelivr.net/npm/simple-icons@9.21.0/icons/maildotru.svg",
+      "persona": "design"
+    },
+    {
+      "label": "Instagram",
+      "url": "https://instagram.com/yitchware",
+      "icon": "https://cdn.jsdelivr.net/npm/simple-icons@9.21.0/icons/instagram.svg",
+      "persona": "design"
+    },
+    {
+      "label": "X",
+      "url": "https://twitter.com/yitchware",
+      "icon": "https://cdn.jsdelivr.net/npm/simple-icons@9.21.0/icons/x.svg",
+      "persona": "design"
+    }
+  ],
+  "experience": [
+    {
+      "company": "Zone01 Kisumu",
+      "role": "Software Engineering Apprentice",
+      "period": "Jul 2025 — Present",
+      "location": "Kisumu, KE",
+      "points": [
+        "Architected a high-concurrency Go forum supporting 100+ concurrent users and a net-cat network utility handling up to 10 simultaneous connections.",
+        "Implemented graph and search algorithms — Edmonds-Karp maximum flow, backtracking and DFS — for optimised routing.",
+        "Built hackathon prototypes: Dawatrace, Agrismart and ProperSats.",
+        "Led Lightning Talks and mentored peers through code reviews under GitHub Flow."
+      ],
+      "persona": "dev"
+    },
+    {
+      "company": "Mynt",
+      "role": "Project Assistant",
+      "period": "Aug 2023 — Sep 2024",
+      "location": "Nairobi, KE",
+      "points": [
+        "Programmed a cryptographic digital-signature utility to automate authentication of internal documents.",
+        "Led a Figma-based UX redesign of the Mynt mobile app."
+      ],
+      "persona": "dev"
+    },
+    {
+      "company": "Upwork & Fiverr",
+      "role": "Freelance Software Engineer",
+      "period": "May 2020 — Jul 2023",
+      "location": "Remote",
+      "points": [
+        "Delivered production REST APIs and full-stack features for international clients using Flask, Go and React.",
+        "Integrated third-party APIs, auth and payment gateways; audited legacy code for performance and security."
+      ],
+      "persona": "dev"
+    },
+    {
+      "company": "Mynt",
+      "role": "Project Assistant — UX",
+      "period": "Aug 2023 — Sep 2024",
+      "location": "Nairobi, KE",
+      "persona": "design",
+      "points": [
+        "Led a Figma-based UX redesign of the Mynt mobile application.",
+        "Worked alongside engineering to carry the redesign through implementation."
+      ]
+    },
+    {
+      "company": "Yitchware",
+      "role": "Graphic Designer",
+      "period": "Ongoing",
+      "location": "Independent",
+      "persona": "design",
+      "points": [
+        "Brand identities, logo design and artwork — selected work on Behance."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "school": "KCA University",
+      "degree": "B.Sc. Software Development",
+      "detail": "Second Class Honours, Upper Division",
+      "year": "2023",
+      "location": "Nairobi, KE"
+    }
+  ],
+  "contact": {
+    "heading": "Let's build something",
+    "blurb": "Hiring for backend or distributed systems work, or have a project in mind? I usually reply within a day.",
+    "formspree": ""
+  },
+  "personas": [
+    {
+      "id": "dev",
+      "label": "Software",
+      "title": "Software Engineer",
+      "logo": "assets/logo-martiandegree.svg",
+      "logoName": "Martian Degree",
+      "tagline": "Backend & Distributed Systems Engineer.",
+      "focus": "Go · Concurrency · Sockets · Databases",
+      "intro": "I build fast, concurrent backend services — Go, Python and well-tuned databases — and ship them in containers.",
+      "about": [
+        "I'm a backend and distributed systems engineer with core expertise in Go concurrency, socket programming and low-latency database architecture.",
+        "I've shipped production services ranging from a high-concurrency forum to a three-tier search engine that falls through SQLite FTS5, live web sources and an LLM. I care about engineering standards: Docker workflows, GitHub Flow code review, and mentoring the people around me.",
+        "Away from the terminal I design, produce music, customise Linux workstations and play basketball."
+      ],
+      "skills": [
+        {
+          "group": "Languages",
+          "items": [
+            "Go",
+            "Python",
+            "SQL",
+            "JavaScript",
+            "HTML/CSS"
+          ]
+        },
+        {
+          "group": "Backend",
+          "items": [
+            "FastAPI",
+            "Flask",
+            "Spring Boot",
+            "Node / Deno",
+            "React",
+            "REST APIs"
+          ]
+        },
+        {
+          "group": "Data & Infra",
+          "items": [
+            "PostgreSQL",
+            "MongoDB",
+            "Redis",
+            "SQLite FTS5",
+            "Docker / Podman",
+            "AWS",
+            "Linux"
+          ]
+        },
+        {
+          "group": "Practice",
+          "items": [
+            "Distributed systems",
+            "Concurrency",
+            "Socket programming",
+            "CI/CD",
+            "Code review",
+            "Mentorship"
+          ]
+        }
+      ],
+      "availability": "Open to backend & distributed systems roles",
+      "heroTitle": "Software Engineer · Backend & Distributed Systems",
+      "learning": [
+        {
+          "title": "Java Full-Stack",
+          "since": "2026",
+          "detail": "Extending my backend work into end-to-end Java web applications — from API to interface.",
+          "topics": [
+            "Java",
+            "Spring Boot",
+            "REST",
+            "Front-end"
+          ]
+        }
+      ],
+      "email": "hajisml@outlook.com"
+    },
+    {
+      "id": "design",
+      "label": "Design",
+      "title": "Graphic Designer",
+      "logo": "assets/logo-yitchware.svg",
+      "logoName": "Yitchware",
+      "tagline": "Brand identity, logo & visual design.",
+      "focus": "Identity · Logo design · UI/UX · Artwork",
+      "intro": "I design marks, identities and interfaces — the same systems thinking I bring to backends, applied to form.",
+      "about": [
+        "Design runs alongside my engineering. I build identities and marks like Yitchware and Martian Degree, compose photo-manipulated artwork like the triangle piece behind this site, and design product interfaces in Figma.",
+        "At Mynt I led a Figma-based UX redesign of the company's mobile app, bridging design and implementation.",
+        "I also produce music — sound, image and code all feed the same craft."
+      ],
+      "skills": [
+        {
+          "group": "Disciplines",
+          "items": [
+            "Brand identity",
+            "Logo design",
+            "UI / UX",
+            "Photo manipulation",
+            "Typography"
+          ]
+        },
+        {
+          "group": "Tools",
+          "items": [
+            "Figma",
+            "Adobe Photoshop",
+            "Adobe Illustrator"
+          ]
+        },
+        {
+          "group": "Also",
+          "items": [
+            "Music production",
+            "Front-end build"
+          ]
+        }
+      ],
+      "availability": "Open to identity & visual design work",
+      "heroTitle": "Graphic Designer · Brand & Visual Identity",
+      "learning": [
+        {
+          "title": "Affinity Studio",
+          "since": "2026",
+          "detail": "Moving my design workflow into Affinity for vector, raster and layout work in one place.",
+          "topics": [
+            "Vector",
+            "Photo editing",
+            "Layout"
+          ]
+        }
+      ],
+      "email": "yitchware@gmail.com"
+    }
+  ],
+  "quote": {
+    "text": "We are not the same, I am a Martian.",
+    "author": "Lil Wayne"
+  }
+}

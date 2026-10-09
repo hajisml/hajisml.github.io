@@ -1,0 +1,348 @@
+{
+  "projects": [
+    {
+      "slug": "kamugram",
+      "title": "Kamugram",
+      "subtitle": "Swahili search engine & Telegram bot",
+      "year": "2025",
+      "category": "Backend",
+      "featured": true,
+      "summary": "A three-tier fallthrough search pipeline over 16,000+ Swahili entries: local FTS5 index, live web sources, then Gemini as a last resort.",
+      "highlights": [
+        "Fallthrough pipeline checks local SQLite indexes first, queries live web sources second, and falls back to Gemini for missing definitions.",
+        "Cut query response times by 80% with an asynchronous Redis caching layer (aiohttp).",
+        "Containerised with Podman Compose to manage async task queues and persistent volumes."
+      ],
+      "stack": [
+        "Python",
+        "aiogram",
+        "SQLite FTS5",
+        "Redis",
+        "Podman",
+        "Gemini"
+      ],
+      "cover": "",
+      "repo": "https://github.com/hajisml/kamugram",
+      "live": "",
+      "persona": "dev",
+      "coverFit": "cover"
+    },
+    {
+      "slug": "go-forum",
+      "title": "Forum",
+      "subtitle": "High-concurrency discussion platform",
+      "year": "2025",
+      "category": "Systems",
+      "featured": true,
+      "summary": "A Go web forum built with idiomatic concurrency patterns, supporting 100+ concurrent users on a SQLite backend.",
+      "highlights": [
+        "Idiomatic Go concurrency for request handling and sessions.",
+        "SQLite persistence, Dockerised for reproducible deploys.",
+        "Reviewed and shipped under GitHub Flow."
+      ],
+      "stack": [
+        "Go",
+        "SQLite",
+        "Docker"
+      ],
+      "cover": "",
+      "repo": "",
+      "live": "",
+      "persona": "dev",
+      "coverFit": "cover"
+    },
+    {
+      "slug": "voltpass",
+      "title": "VoltPass",
+      "subtitle": "Telegram credential manager",
+      "year": "2024",
+      "category": "Backend",
+      "featured": false,
+      "summary": "An async HTTPS webhook service processing real-time Telegram payloads, with a strictly isolated MongoDB CRUD engine.",
+      "highlights": [
+        "Asynchronous HTTPS webhook architecture for real-time POST payloads from the Telegram API.",
+        "MongoDB CRUD engine with strict per-user data isolation and single-click payload copying.",
+        "Administrative telemetry dashboards."
+      ],
+      "stack": [
+        "Python",
+        "MongoDB",
+        "HTTPS",
+        "Linux"
+      ],
+      "cover": "",
+      "repo": "https://github.com/hajisml/voltpass",
+      "live": "",
+      "persona": "dev",
+      "coverFit": "cover"
+    },
+    {
+      "slug": "net-cat",
+      "title": "Net-Cat",
+      "subtitle": "TCP group chat utility",
+      "year": "2025",
+      "category": "Systems",
+      "featured": false,
+      "summary": "A netcat-style TCP chat server in Go handling up to 10 simultaneous connections with raw socket programming.",
+      "highlights": [
+        "Raw TCP sockets and goroutine-per-connection design.",
+        "Broadcast fan-out with safe shared state."
+      ],
+      "stack": [
+        "Go",
+        "TCP",
+        "Sockets"
+      ],
+      "cover": "",
+      "repo": "",
+      "live": "",
+      "persona": "dev",
+      "coverFit": "cover"
+    },
+    {
+      "slug": "max-flow-router",
+      "title": "Max-Flow Router",
+      "subtitle": "Graph routing with Edmonds-Karp",
+      "year": "2025",
+      "category": "Algorithms",
+      "featured": false,
+      "summary": "Routes agents through a network with minimal turns using Edmonds-Karp maximum flow, backtracking and DFS.",
+      "highlights": [
+        "Edmonds-Karp maximum flow for path capacity.",
+        "Backtracking and DFS for optimal path selection."
+      ],
+      "stack": [
+        "Go",
+        "Graphs"
+      ],
+      "cover": "",
+      "repo": "",
+      "live": "",
+      "persona": "dev",
+      "coverFit": "cover"
+    },
+    {
+      "slug": "dawatrace",
+      "title": "Dawatrace",
+      "subtitle": "Pharma provenance on Polygon",
+      "year": "2025",
+      "category": "Hackathon",
+      "featured": false,
+      "summary": "Tracks medicine from manufacturer to patient on-chain, with gasless QR verification at the point of sale.",
+      "highlights": [
+        "Solidity contracts on Polygon.",
+        "Gasless QR-code verification flow."
+      ],
+      "stack": [
+        "Solidity",
+        "Polygon",
+        "React"
+      ],
+      "cover": "",
+      "repo": "",
+      "live": "",
+      "persona": "dev",
+      "coverFit": "cover"
+    },
+    {
+      "slug": "agrismart",
+      "title": "Agrismart",
+      "subtitle": "Offline-first farming PWA",
+      "year": "2025",
+      "category": "Hackathon",
+      "featured": false,
+      "summary": "A local-first progressive web app that keeps working for farmers with no connectivity and syncs when back online.",
+      "highlights": [
+        "Local-first data model.",
+        "Installable, offline-capable PWA."
+      ],
+      "stack": [
+        "PWA",
+        "JavaScript"
+      ],
+      "cover": "",
+      "repo": "",
+      "live": "",
+      "persona": "dev",
+      "coverFit": "cover"
+    },
+    {
+      "slug": "propersats",
+      "title": "ProperSats",
+      "subtitle": "Bitcoin multi-sig land listings",
+      "year": "2025",
+      "category": "Hackathon",
+      "featured": false,
+      "summary": "A land-listing platform secured by Bitcoin multi-signature escrow.",
+      "highlights": [
+        "Multi-sig escrow for listings.",
+        "Bitcoin-native payments."
+      ],
+      "stack": [
+        "Bitcoin",
+        "Multi-sig"
+      ],
+      "cover": "",
+      "repo": "",
+      "live": "",
+      "persona": "dev",
+      "coverFit": "cover"
+    },
+    {
+      "slug": "club-nilotes-pattern",
+      "title": "Club Nilotes Pattern",
+      "subtitle": "Brand pattern",
+      "year": "",
+      "category": "Pattern",
+      "featured": true,
+      "persona": "design",
+      "summary": "Club Nilotes Pattern — published on Behance by Yitchware Graphics.",
+      "highlights": [
+        "Full case study and imagery on Behance."
+      ],
+      "stack": [
+        "Pattern design",
+        "Branding"
+      ],
+      "cover": "https://mir-s3-cdn-cf.behance.net/projects/404/c28c22250773933.Y3JvcCwyMjQwLDE3NTIsMzY3MCw4MDQ.png",
+      "coverFit": "cover",
+      "repo": "",
+      "live": "https://www.behance.net/gallery/250773933/Club-Nilotes-Pattern",
+      "source": "behance"
+    },
+    {
+      "slug": "logos",
+      "title": "Logos",
+      "subtitle": "Logo collection",
+      "year": "",
+      "category": "Branding",
+      "featured": true,
+      "persona": "design",
+      "summary": "Logos — published on Behance by Yitchware Graphics.",
+      "highlights": [
+        "Full case study and imagery on Behance."
+      ],
+      "stack": [
+        "Logo design",
+        "Identity"
+      ],
+      "cover": "https://mir-s3-cdn-cf.behance.net/projects/404/fd47bd250772109.Y3JvcCwxMDU1LDgyNSwxOTMsNzM.jpg",
+      "coverFit": "cover",
+      "repo": "",
+      "live": "https://www.behance.net/gallery/250772109/Logos",
+      "source": "behance"
+    },
+    {
+      "slug": "predator-energy-ad",
+      "title": "Predator Energy Advertisement",
+      "subtitle": "Product advertisement",
+      "year": "",
+      "category": "Advertising",
+      "featured": true,
+      "persona": "design",
+      "summary": "Predator Energy Advertisement — published on Behance by Yitchware Graphics.",
+      "highlights": [
+        "Full case study and imagery on Behance."
+      ],
+      "stack": [
+        "Advertising",
+        "Compositing"
+      ],
+      "cover": "https://mir-s3-cdn-cf.behance.net/projects/404/5c341b211608819.Y3JvcCw5MjAsNzIwLDc5LDA.png",
+      "coverFit": "cover",
+      "repo": "",
+      "live": "https://www.behance.net/gallery/211608819/Predator-Energy-Advertisement",
+      "source": "behance"
+    },
+    {
+      "slug": "halim-artwork",
+      "title": "HALIM",
+      "subtitle": "Key artwork & personal identity",
+      "year": "2021",
+      "category": "Artwork",
+      "featured": false,
+      "summary": "Photo-manipulated key art layering a portrait, an aerial city and a mountain range inside a striped triangle — the visual identity behind this site.",
+      "highlights": [
+        "Composited portrait, cityscape and landscape into one triangular frame.",
+        "Custom display typeface treatment carried through the web identity."
+      ],
+      "stack": [
+        "Photo manipulation",
+        "Typography",
+        "Identity"
+      ],
+      "cover": "assets/bg.webp",
+      "coverFit": "cover",
+      "persona": "design",
+      "repo": "",
+      "live": "https://behance.net/yitchware"
+    },
+    {
+      "slug": "yitchware",
+      "title": "Yitchware",
+      "subtitle": "Brand mark",
+      "year": "",
+      "category": "Branding",
+      "featured": false,
+      "summary": "A symmetrical, blade-like mark built from two mirrored forms meeting at a single point.",
+      "highlights": [
+        "Mirrored construction for a balanced, emblematic silhouette.",
+        "Delivered as a scalable vector mark."
+      ],
+      "stack": [
+        "Logo design",
+        "Vector"
+      ],
+      "cover": "assets/logo-yitchware.svg",
+      "coverFit": "contain",
+      "persona": "design",
+      "repo": "",
+      "live": "https://behance.net/yitchware"
+    },
+    {
+      "slug": "martian-degree",
+      "title": "Martian Degree",
+      "subtitle": "Brand mark",
+      "year": "",
+      "category": "Branding",
+      "featured": false,
+      "summary": "A geometric mark combining a slash, a node and two triangles — engineering drawn as a glyph.",
+      "highlights": [
+        "Built on a strict geometric grid.",
+        "Works at icon size and large format."
+      ],
+      "stack": [
+        "Logo design",
+        "Geometry"
+      ],
+      "cover": "assets/logo-martiandegree.svg",
+      "coverFit": "contain",
+      "persona": "design",
+      "repo": "",
+      "live": "https://behance.net/yitchware"
+    },
+    {
+      "slug": "mynt-redesign",
+      "title": "Mynt App Redesign",
+      "subtitle": "Mobile UX redesign",
+      "year": "2024",
+      "category": "UI/UX",
+      "featured": false,
+      "summary": "Led a Figma-based UX redesign of Mynt's mobile application.",
+      "highlights": [
+        "Restructured key flows in Figma.",
+        "Worked with engineering through implementation."
+      ],
+      "stack": [
+        "Figma",
+        "UX",
+        "Mobile"
+      ],
+      "cover": "",
+      "coverFit": "cover",
+      "persona": "design",
+      "repo": "",
+      "live": "https://behance.net/yitchware"
+    }
+  ]
+}

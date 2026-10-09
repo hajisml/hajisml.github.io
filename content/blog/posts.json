@@ -1,0 +1,22 @@
+{
+  "posts": [
+    {
+      "slug": "propersats",
+      "title": "Land, Law, and Lightning: Building Trustless Real Estate in a Caffeine-Fueled Weekend",
+      "date": "2026-06-14",
+      "summary": "A beginner’s guide to Lightning development through ProperSats — a multi-sig Lightning escrow for Kenyan land purchases, built in a 24-hour hackathon at Zone01 Kisumu. 3rd place out of 16 teams.",
+      "cover": "https://media2.dev.to/dynamic/image/width=1200,height=627,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fg1999pzettlt2xg5i1m7.png",
+      "tags": [
+        "Bitcoin",
+        "Lightning",
+        "FastAPI",
+        "React",
+        "Hackathon"
+      ],
+      "file": "content/blog/propersats.md",
+      "canonical": "https://dev.to/hajisml/land-law-and-lightning-building-trustless-real-estate-in-a-caffeine-fueled-weekend-1elj",
+      "persona": "dev",
+      "readMins": 7
+    }
+  ]
+}
