@@ -66,7 +66,21 @@ Set the Pages secrets in the dashboard (**Workers & Pages → halim → Settings
 
 ## CMS
 
-Sveltia CMS lives at `/admin/` (`public/admin/`) and still commits to the `staging` branch. Its content format is unchanged, so the old and new sites read the same files.
+Sveltia CMS lives at `/admin/` (`public/admin/`) and still commits to the `staging` branch.
+
+**Sign in with GitHub** goes through the `sveltia-cms-auth` Worker at `https://sveltia-cms-auth.freakerzoidd.workers.dev`, which runs [sveltia/sveltia-cms-auth](https://github.com/sveltia/sveltia-cms-auth) pinned to commit `4fd08b5`.
+- **Worker variables:** `GITHUB_CLIENT_ID` and `ALLOWED_DOMAINS` (`halim-c4x.pages.dev, *.halim-c4x.pages.dev, halim.is-a.dev, hajisml.github.io`).
+- **Worker secret:** `GITHUB_CLIENT_SECRET`.
+- **Scope:** `auth_scope: public_repo`, so the sign-in token reaches your public repos but not private ones.
+- **Alternative:** "Sign In Using Access Token" with a fine-grained token limited to this repo still works and is the narrower option.
+
+## Protected previews
+
+Cloudflare Access protects every preview deployment (`*.halim-c4x.pages.dev`), so you sign in with a one-time email code. The production address stays public. The policy lives in Cloudflare Zero Trust → Access → Applications.
+
+## Custom domain
+
+`halim.is-a.dev` is attached to the Pages project (`.github/workflows/pages-domain.yml`; it has to go through the API because is-a.dev is on the Public Suffix List). It goes live once `domains/halim.json` is merged into [is-a-dev/register](https://github.com/is-a-dev/register). After that, set the `SITE_URL` repo variable to `https://halim.is-a.dev`. Its content format is unchanged, so the old and new sites read the same files.
 
 **At cutover:**
 - Point `media_folder` at `public/assets/uploads`.
