@@ -53,9 +53,9 @@ Then build with Turnstile's test site key: `PUBLIC_TURNSTILE_SITE_KEY=1x00000000
 | GitHub variable | `TURNSTILE_SITE_KEY` | Public Turnstile site key (no key: the form uses `mailto:`) |
 | Pages secret | `TURNSTILE_SECRET` | Turnstile secret key |
 | Pages secret | `RESEND_API_KEY` | Resend API key |
-| `wrangler.toml` var | `CONTACT_TO` | Inbox that receives messages. On Resend's free tier without a verified domain, this must be the Resend account's own address |
+| Pages secret | `CONTACT_TO` | Inbox that receives messages (`hajisml@outlook.com`). On Resend's free tier without a verified domain, this must be the Resend account's own address |
 
-Set the Pages secrets with `npx wrangler pages secret put TURNSTILE_SECRET --project-name halim` (and the same for `RESEND_API_KEY`).
+Set the Pages secrets in the dashboard (**Workers & Pages → halim → Settings → Variables and Secrets**) or with `npx wrangler pages secret put <NAME> --project-name halim` from a terminal where you've run `npx wrangler login`. They take effect on the next deploy.
 
 ## Contact form and spam
 

@@ -1,7 +1,6 @@
 # Cloudflare Pages project (deployed by .github/workflows/cloudflare.yml).
+# Secrets (TURNSTILE_SECRET, RESEND_API_KEY, CONTACT_TO) live on the Pages project:
+#   npx wrangler pages secret put <NAME> --project-name halim
 name = "halim"
 pages_build_output_dir = "dist"
 compatibility_date = "2026-09-01"
-
-[vars]
-CONTACT_TO = "hajisml@outlook.com"
