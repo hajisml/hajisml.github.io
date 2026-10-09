@@ -1,0 +1,7 @@
+# Cloudflare Pages project (deployed by .github/workflows/cloudflare.yml).
+name = "halim"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-09-01"
+
+[vars]
+CONTACT_TO = "hajisml@outlook.com"
